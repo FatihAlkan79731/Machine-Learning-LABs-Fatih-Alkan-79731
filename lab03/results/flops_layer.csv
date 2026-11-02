@@ -1,0 +1,4 @@
+model,layer,formula,hand_flops,thop_flops,thop_over_hand,thop_flops_default
+MLP,"Linear(784, 256)",2 x in x out,401408,401408,1.0000,
+CNN,"Conv2d(16, 32, 3) on 14x14",2 x K x K x C_in x C_out x H_out x W_out,1806336,1806336,1.0000,
+Attention,"TransformerEncoderLayer (seq 16, d 64, ff 128)","qkv_projection 393,216 + attention_scores (QK^T) 32,768 + weighted_sum (AV) 32,768 + output_projection 131,072 + feed_forward (2 linears) 524,288",1114112,540672,0.4853,0.0000

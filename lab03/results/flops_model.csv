@@ -1,0 +1,4 @@
+model,params_torchinfo,params_counted,hand_flops,thop_flops,thop_over_hand,thop_flops_default
+MLP,235146,235146,469504,469504,1.0000,469504
+CNN,20490,20490,2063488,2063488,1.0000,2063488
+Attention,71818,71818,2329856,1182976,0.5077,101632

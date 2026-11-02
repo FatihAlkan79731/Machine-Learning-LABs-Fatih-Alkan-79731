@@ -1,0 +1,4 @@
+model,latency_b1_ms,latency_b128_ms,torch_threads
+MLP,0.0685,0.4495,8
+CNN,0.2693,7.4235,8
+Attention,0.6840,5.6615,8

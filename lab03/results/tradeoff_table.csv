@@ -1,0 +1,4 @@
+model,test_acc,val_acc,train_time_s,params_torchinfo,params_counted,hand_flops,thop_flops,thop_over_hand,thop_flops_default,latency_b1_ms,latency_b128_ms,torch_threads
+MLP,0.8776,0.8826,85.9379,235146,235146,469504,469504,1.0000,469504,0.0685,0.4495,8
+CNN,0.8921,0.8974,113.3508,20490,20490,2063488,2063488,1.0000,2063488,0.2693,7.4235,8
+Attention,0.8595,0.8664,140.7529,71818,71818,2329856,1182976,0.5077,101632,0.6840,5.6615,8
