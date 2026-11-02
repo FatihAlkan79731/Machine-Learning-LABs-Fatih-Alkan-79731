@@ -15,6 +15,24 @@ source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+### Known dependency conflict
+
+The pinned versions in the manual are not fully consistent: `mlflow==2.14.1` declares
+`pyarrow<16`, while the manual pins `pyarrow==16.1.0`. A plain `pip install -r requirements.txt`
+stops with `ResolutionImpossible`. The exact pinned versions can still be installed in three steps
+(Windows PowerShell shown; the same idea works on Linux/macOS with `grep -v`):
+
+```powershell
+(Get-Content requirements.txt) -notmatch '^mlflow' | Set-Content req-tmp.txt
+.venv\Scripts\python.exe -m pip install -r req-tmp.txt
+.venv\Scripts\python.exe -m pip install mlflow==2.14.1
+.venv\Scripts\python.exe -m pip install --no-deps pyarrow==16.1.0
+Remove-Item req-tmp.txt
+```
+
+After this, every package matches `requirements.txt` (check with `lab01/src/print_versions.py`).
+`pip check` will still report the mlflow/pyarrow mismatch; it does not affect the labs.
+
 ## Repository layout
 
 ```
