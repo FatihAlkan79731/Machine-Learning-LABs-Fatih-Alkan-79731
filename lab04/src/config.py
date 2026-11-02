@@ -1,5 +1,7 @@
-"""Pipeline configuration. Written to results/config.yaml together with the data hashes."""
+"""Paths, schema and the pipeline configuration (loaded from lab04/config.yaml)."""
 from pathlib import Path
+
+import yaml
 
 LAB_DIR = Path(__file__).resolve().parents[1]
 ROOT = LAB_DIR.parent
@@ -8,18 +10,9 @@ RAW_DIR = DATA / "raw"
 PROCESSED_DIR = DATA / "processed"
 RESULTS = LAB_DIR / "results"
 
-CONFIG = {
-    "dataset": {"name": "adult", "version": 2, "source": "OpenML (fetch_openml)"},
-    "seed": 42,
-    "split": {"test_size": 0.30, "stratify": "income"},
-    "imputation": {"numeric": "median", "categorical": "most_frequent"},
-    "clipping": {"lower_percentile": 1, "upper_percentile": 99},
-    "duplicates": "drop exact duplicates from train only",
-    "derived_features": ["capital_net = capital-gain - capital-loss",
-                         "hours_per_age = hours-per-week / (age - 16)"],
-    "baseline_model": {"type": "LogisticRegression", "max_iter": 1000},
-    "label_audit": {"sample_size": 50},
-}
+CONFIG_FILE = LAB_DIR / "config.yaml"
+with open(CONFIG_FILE, encoding="utf-8") as f:
+    CONFIG = yaml.safe_load(f)
 
 TARGET = "income"
 POSITIVE = ">50K"

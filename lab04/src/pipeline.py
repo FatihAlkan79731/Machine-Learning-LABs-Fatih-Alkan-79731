@@ -3,12 +3,17 @@
     python lab04/src/pipeline.py
 
 ingest -> validate -> split -> clean/transform (fit on train only) -> derived-feature
-experiment -> label-quality audit -> hash + config.yaml
+experiment -> label-quality audit -> SHA256 hash + results/run_config.yaml + data_quality.png
 """
 import hashlib
 import json
 
 import joblib
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import yaml
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
@@ -40,20 +45,46 @@ def set_seeds():
         pass
 
 
-def to_yaml(obj, indent=0):
-    pad = "  " * indent
-    lines = []
-    if isinstance(obj, dict):
-        for k, v in obj.items():
-            if isinstance(v, (dict, list)):
-                lines.append(f"{pad}{k}:")
-                lines.append(to_yaml(v, indent + 1))
-            else:
-                lines.append(f"{pad}{k}: {json.dumps(v)}")
-    else:
-        for v in obj:
-            lines.append(f"{pad}- {json.dumps(v)}")
-    return "\n".join(lines)
+def plot_quality(df, train_raw, stats, feat):
+    """Data-quality figure: missing values, label balance, clipping, feature experiment."""
+    fig, ax = plt.subplots(2, 2, figsize=(12, 8))
+
+    miss = pd.Series({c: (df[c] == "?").mean() * 100 for c in CATEGORICAL})
+    miss = miss[miss > 0].sort_values()
+    ax[0, 0].barh(miss.index, miss.values, color="#4c72b0")
+    ax[0, 0].set_xlabel("rows with '?' (%)")
+    ax[0, 0].set_title("Missing values per column (full data)")
+
+    rates = {"all": (df[TARGET] == POSITIVE).mean()}
+    for col in ["sex", "race"]:
+        for v, r in df.groupby(col)[TARGET].apply(lambda s: (s == POSITIVE).mean()).items():
+            rates[f"{col}: {v}"] = r
+    rates = pd.Series(rates) * 100
+    ax[0, 1].barh(rates.index, rates.values, color="#dd8452")
+    ax[0, 1].set_xlabel("share with income >50K (%)")
+    ax[0, 1].set_title("Label balance by group")
+
+    col = "hours-per-week"
+    row = stats.set_index("feature").loc[col]
+    ax[1, 0].hist(train_raw[col], bins=50, color="#55a868", alpha=0.8)
+    for b in (row.clip_low_p1, row.clip_high_p99):
+        ax[1, 0].axvline(b, color="black", ls="--", lw=1)
+    ax[1, 0].set_xlabel(col)
+    ax[1, 0].set_ylabel("train rows")
+    ax[1, 0].set_title("Train distribution and 1st/99th percentile clip bounds")
+
+    x = np.arange(2)
+    for i, metric in enumerate(["accuracy", "f1"]):
+        ax[1, 1].bar(x + i * 0.35, feat[metric], width=0.35, label=metric)
+        for xi, v in zip(x + i * 0.35, feat[metric]):
+            ax[1, 1].text(xi, v + 0.005, f"{v:.4f}", ha="center", fontsize=8)
+    ax[1, 1].set_xticks(x + 0.175, ["without derived", "with derived"])
+    ax[1, 1].set_ylim(0, 1)
+    ax[1, 1].legend()
+    ax[1, 1].set_title("LogisticRegression baseline (test set)")
+
+    fig.tight_layout()
+    fig.savefig(RESULTS / "data_quality.png", dpi=150)
 
 
 def log(lines, text):
@@ -87,6 +118,7 @@ def main():
     train_df, test_df = train_test_split(df, test_size=CONFIG["split"]["test_size"],
                                          stratify=df[TARGET], random_state=SEED)
     n_train_raw = len(train_df)
+    train_raw = train_df.copy()
     n_dup = int(train_df.duplicated().sum())
     train_df = train_df.drop_duplicates().copy()
     log(out, f"[split] train={n_train_raw} test={len(test_df)}; dropped {n_dup} exact duplicates "
@@ -174,7 +206,9 @@ def main():
             "processed_sha256": h_all,
         },
     }
-    (RESULTS / "config.yaml").write_text(to_yaml(run) + "\n", encoding="utf-8")
+    with open(RESULTS / "run_config.yaml", "w", encoding="utf-8") as f:
+        yaml.safe_dump(run, f, sort_keys=False, allow_unicode=True)
+    plot_quality(df, train_raw, stats, feat)
     (RESULTS / "pipeline_log.txt").write_text("\n".join(out) + "\n", encoding="utf-8")
     print("\nDone. Outputs in lab04/results/")
 
