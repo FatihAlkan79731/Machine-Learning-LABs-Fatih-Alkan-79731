@@ -52,6 +52,7 @@ lab01/
 | Lab | Topic | Folder |
 |-----|-------|--------|
 | 01 | Environment and first system measurements | [lab01](lab01/) |
+| 02 | A neural network from scratch (NumPy) | [lab02](lab02/) |
 
 ## Reproducibility
 

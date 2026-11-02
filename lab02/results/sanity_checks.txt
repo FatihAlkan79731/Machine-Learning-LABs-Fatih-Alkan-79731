@@ -1,0 +1,25 @@
+train: (1257, 64), test: (540, 64)
+
+--- width 16 (1482 parameters) ---
+  W1: (64, 16)
+  b1: (16,)
+  W2: (16, 16)
+  b2: (16,)
+  W3: (16, 10)
+  b3: (10,)
+output shape for batch of 32: (32, 10) (expected (32, 10))
+max |row sum - 1|: 2.22e-16 -> OK
+untrained loss: 2.3032 (ln(10) = 2.3026)
+gradient check: 10/10 weights with relative error < 1e-06 -> PASS
+
+--- width 64 (8970 parameters) ---
+  W1: (64, 64)
+  b1: (64,)
+  W2: (64, 64)
+  b2: (64,)
+  W3: (64, 10)
+  b3: (10,)
+output shape for batch of 32: (32, 10) (expected (32, 10))
+max |row sum - 1|: 2.22e-16 -> OK
+untrained loss: 2.3128 (ln(10) = 2.3026)
+gradient check: 10/10 weights with relative error < 1e-06 -> PASS
