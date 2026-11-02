@@ -34,7 +34,7 @@ All steps can be reproduced with `python lab03/src/run_all.py`.
 
 ### Hand calculations
 
-Photos of the hand calculations: [page 1 – parameters, Linear and Conv2d FLOPs](results/paper_1_params_flops.jpg), [page 2 – attention parameters and encoder-layer FLOPs](results/paper_2_attention.jpg).
+Photo of the hand calculations for the parameters and the Linear and Conv2d FLOPs: [results/paper_1_params_flops.jpg](results/paper_1_params_flops.jpg). The attention parameters and the encoder-layer breakdown are worked out in the tables below.
 
 **Parameters**
 
