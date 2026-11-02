@@ -85,21 +85,29 @@ On a 128-sample batch, kink crossings are much less likely and every check passe
 
 | Width | Batch | Forward | Backward | Backward / Forward | Matmul FLOP ratio |
 |---|---|---|---|---|---|
-| 16 | 32 | 19.98 | 22.30 | 1.12 | 1.29 |
-| 16 | 1257 | 294.85 | 341.46 | 1.16 | 1.29 |
-| 64 | 32 | 41.51 | 53.83 | 1.30 | 1.54 |
-| 64 | 1257 | 827.03 | 1170.33 | 1.42 | 1.54 |
+| 16 | 32 | 30.80 | 34.60 | 1.12 | 1.29 |
+| 16 | 1257 | 701.55 | 620.15 | 0.88 | 1.29 |
+| 64 | 32 | 47.55 | 61.20 | 1.29 | 1.54 |
+| 64 | 1257 | 1285.45 | 1673.90 | 1.30 | 1.54 |
 
-**Which pass dominates.** The backward pass is slower in every setting, and the gap grows with width and batch size. The reason is the number of matrix multiplications:
+**Which pass dominates.** In three of the four settings the backward pass is slower. The reason is the number of matrix multiplications:
 
 - The forward pass needs 3: x·W1, a1·W2, a2·W3.
 - The backward pass needs 5: one weight gradient per layer (aᵀ·dz) plus two products that carry the gradient back to the previous layer (dz·Wᵀ).
 - The input gradient dx is not needed, which is why the backward pass costs less than 2× the forward pass.
 
-Counting FLOPs gives a backward/forward ratio of 1.29 for W = 16 and 1.54 for W = 64. For W = 64 the W×W products, which appear once forward and twice backward, make up a larger share of the work. The measured ratio approaches the FLOP ratio as the matrices get larger: 1.42 vs. 1.54 for W = 64 with the full batch. With small matrices (batch 32, W = 16), fixed overheads dominate the runtime instead: Python calls, memory allocation, the ReLU masks and the softmax. These do not scale with FLOPs, so the ratio stays near 1.
+Counting FLOPs gives a backward/forward ratio of 1.29 for W = 16 and 1.54 for W = 64. For W = 64 the W×W products, which appear once forward and twice backward, make up a larger share of the work. With W = 64 the measured ratio (1.29–1.30) follows the FLOP ratio, so matrix multiplication dominates the runtime.
+
+The exception is W = 16 with the full batch, where the forward pass is slower (0.88). Here the matrices are thin (1257×64 by 64×16) and the matmuls are cheap. The element-wise work then takes a large share of the time, and most of it sits in the forward pass:
+
+- the softmax: one `exp` per output, plus a max and a sum per row;
+- creating the ReLU outputs;
+- adding the biases.
+
+The backward pass only needs comparisons and multiplications by the ReLU masks. So matrix multiplication dominates only once the layers are wide enough; for very small layers the memory-bound element-wise operations can outweigh it.
 
 ## 4. Conclusions
 
 1. **Gradient checking is a reliable test, but only away from non-differentiable points.** The hand-derived backward pass matches the numerical slope to better than 1e-6 on every checked weight. The failures on the full data set taught me that a failing check does not always mean a wrong gradient: a ReLU kink or a tiny gradient can break the finite difference itself. Logging whether a kink was crossed made this visible instead of guessing.
 2. **The learning rate matters more than the width here.** With lr = 0.001 neither network leaves the ln(10) plateau within 50 epochs (test accuracy 18–36 %). lr = 0.01 learns slowly, and lr = 0.1 reaches about 96–97 % for both widths. The wider network learns faster at every learning rate because it has more paths for the gradient. At lr = 0.1, however, the final accuracy of the two widths is almost the same (96.5 % vs. 96.9 %), so the six times more parameters buy little on this small dataset.
-3. **Training cost is dominated by matrix multiplication, and the backward pass is the larger part.** The backward pass does 5 matrix products against 3 in the forward pass, so one training step costs roughly 2.1–2.4× a single forward pass. This explains why inference is much cheaper than training. Once the matrices are large enough, the runtime follows the FLOP count; with very small matrices the fixed per-call overhead hides it.
+3. **The backward pass usually dominates because it does more matrix multiplication, but only once the layers are wide enough.** The backward pass does 5 matrix products against 3 in the forward pass. With W = 64 it is consistently about 1.3× slower, and one training step costs about 2.3× a forward pass, which is why inference is much cheaper than training. With W = 16 and a large batch the forward pass was actually slower, because the softmax and other element-wise operations cost more than the tiny matrix products. FLOP counts predict runtime well only when the matrix products are the main work.
