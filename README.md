@@ -54,6 +54,7 @@ lab01/
 | 01 | Environment and first system measurements | [lab01](lab01/) |
 | 02 | A neural network from scratch (NumPy) | [lab02](lab02/) |
 | 03 | Architectures and their costs (MLP, CNN, attention) | [lab03](lab03/) |
+| 04 | Data pipeline and quality (UCI Adult) | [lab04](lab04/) |
 
 ## Reproducibility
 
