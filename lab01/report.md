@@ -28,7 +28,7 @@ All steps can be reproduced with `python lab01/src/run_all.py`.
 
 ## 3. Results
 
-Hardware: AMD64 laptop CPU (AMD Family 23 Model 104), Windows 11 (build 26200), Python 3.11.8 with all pinned versions (`results/versions.txt`).
+Hardware: AMD64 laptop CPU (AMD Family 23 Model 104), Windows (build 10.0.26200), Python 3.11.8 with all pinned versions (`results/versions.txt`).
 
 ### Accuracy (`results/baseline_accuracy.csv`)
 
