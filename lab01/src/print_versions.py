@@ -22,6 +22,16 @@ def read_requirements(path):
     return packages
 
 
+def same_version(a, b):
+    """Compare versions after normalization (e.g. 0.1.1-2209072238 == 0.1.1.post2209072238)."""
+    try:
+        from packaging.version import Version
+
+        return Version(a) == Version(b)
+    except Exception:
+        return a == b
+
+
 def main():
     lines = [
         f"Python: {sys.version.split()[0]}",
@@ -36,7 +46,7 @@ def main():
             installed = metadata.version(name)
         except metadata.PackageNotFoundError:
             installed = "NOT INSTALLED"
-        flag = "" if installed == pinned else "  <-- mismatch"
+        flag = "" if same_version(installed, pinned) else "  <-- mismatch"
         lines.append(f"{name:<20} {installed:<28} {pinned:<28}{flag}")
 
     text = "\n".join(lines)

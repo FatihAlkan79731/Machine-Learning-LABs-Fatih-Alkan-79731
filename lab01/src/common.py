@@ -18,9 +18,14 @@ MODEL_NAMES = {
 }
 
 
-def set_seeds(seed=SEED):
+def set_seeds(seed=SEED, use_torch=True):
+    """Fix all seeds. use_torch=False skips importing torch: these models do not
+    use it, and loading it adds ~100 MB to the process, which would distort the
+    memory measurements."""
     random.seed(seed)
     np.random.seed(seed)
+    if not use_torch:
+        return
     try:
         import torch
 

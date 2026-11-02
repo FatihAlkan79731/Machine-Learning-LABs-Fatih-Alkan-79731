@@ -57,7 +57,7 @@ class PeakRSS:
 
 
 def measure(key):
-    set_seeds()
+    set_seeds(use_torch=False)
     X_train, X_test, y_train, _ = load_split()
     proc = psutil.Process(os.getpid())
     rss_before = proc.memory_info().rss
