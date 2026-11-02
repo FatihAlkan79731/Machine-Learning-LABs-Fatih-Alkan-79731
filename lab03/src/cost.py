@@ -62,12 +62,17 @@ def hand_model_flops(name):
 
 
 # ---------------------------------------------------------------- thop
-def thop_flops(module, x):
-    """thop MACs x 2. The module is copied and put in train mode so that the
-    TransformerEncoderLayer does not take its fused inference fast path, which
-    would hide the inner Linear layers from thop's hooks."""
-    m = copy.deepcopy(module).train()
-    with torch.no_grad():
+def thop_flops(module, x, grad=True):
+    """thop MACs x 2.
+
+    thop.profile always switches the model to eval mode. For nn.TransformerEncoderLayer
+    in eval mode with autograd off, PyTorch runs a single fused kernel (the
+    "fast path"), so thop's hooks on the inner Linear layers never fire. With
+    grad=True autograd stays on, the fast path is disabled and the layers run
+    one by one. grad=False shows what a default thop call reports.
+    """
+    m = copy.deepcopy(module)
+    with torch.set_grad_enabled(grad):
         macs, _ = thop.profile(m, inputs=(x,), verbose=False)
     return 2 * int(macs)
 
@@ -108,6 +113,7 @@ def main():
 
         hand = hand_model_flops(name)
         measured = thop_flops(model, x1)
+        measured_fast = thop_flops(model, x1, grad=False)
         model_rows.append({
             "model": name,
             "params_torchinfo": info.total_params,
@@ -115,6 +121,7 @@ def main():
             "hand_flops": hand,
             "thop_flops": measured,
             "thop_over_hand": measured / hand,
+            "thop_flops_default_nograd": measured_fast,
         })
 
         lat_rows.append({
@@ -124,7 +131,7 @@ def main():
         })
         print(f"{name}: {n_params:,} params, hand {hand:,} FLOPs, thop {measured:,} FLOPs")
 
-    (RESULTS / "model_summaries.txt").write_text("\n".join(summaries))
+    (RESULTS / "model_summaries.txt").write_text("\n".join(summaries), encoding="utf-8")
 
     # one layer of each type
     total, parts = encoder_layer_flops()
@@ -143,6 +150,7 @@ def main():
          "hand_flops": total,
          "thop_flops": thop_flops(enc_layer, torch.randn(1, SEQ, D))},
     ]
+    layer_rows[2]["thop_flops_default_nograd"] = thop_flops(enc_layer, torch.randn(1, SEQ, D), grad=False)
     for r in layer_rows:
         r["thop_over_hand"] = r["thop_flops"] / r["hand_flops"]
 

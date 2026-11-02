@@ -109,7 +109,7 @@ def main():
     text = "\n".join(lines)
     print(text)
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / "sanity_checks.txt").write_text(text + "\n")
+    (RESULTS / "sanity_checks.txt").write_text(text + "\n", encoding="utf-8")
 
     df = pd.DataFrame(all_rows)[["width", "param", "index", "analytic", "numerical", "rel_error", "kink_crossed", "pass"]]
     df.to_csv(RESULTS / "grad_check.csv", index=False, float_format="%.6e")

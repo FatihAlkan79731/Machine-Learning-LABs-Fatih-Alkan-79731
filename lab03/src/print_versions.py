@@ -52,7 +52,7 @@ def main():
     text = "\n".join(lines)
     print(text)
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / "versions.txt").write_text(text + "\n")
+    (RESULTS / "versions.txt").write_text(text + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
