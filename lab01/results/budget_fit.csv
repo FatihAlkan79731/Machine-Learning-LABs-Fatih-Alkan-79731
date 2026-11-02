@@ -1,0 +1,9 @@
+model,target,memory_budget,latency_budget_ms,size_budget_kb,memory_ok,latency_ok,size_ok,fits
+LogisticRegression,Cloud,≥ 1 GB,100,512000.0,yes,yes,yes,yes
+LogisticRegression,Edge,256–1024 MB,50,51200.0,yes,yes,yes,yes
+LogisticRegression,Mobile,64–256 MB,20,10240.0,yes,yes,yes,yes
+LogisticRegression,TinyML,≤ 256 KB,10,100.0,no,yes,yes,no
+RandomForestClassifier,Cloud,≥ 1 GB,100,512000.0,yes,yes,yes,yes
+RandomForestClassifier,Edge,256–1024 MB,50,51200.0,yes,yes,yes,yes
+RandomForestClassifier,Mobile,64–256 MB,20,10240.0,yes,yes,yes,yes
+RandomForestClassifier,TinyML,≤ 256 KB,10,100.0,no,yes,no,no

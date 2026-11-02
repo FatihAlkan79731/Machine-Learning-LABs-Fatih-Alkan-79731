@@ -1,0 +1,24 @@
+# environment
+.venv/
+venv/
+env/
+
+# data (downloaded by scripts)
+data/
+
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# tools
+mlruns/
+emissions.csv
+.codecarbon.config
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
