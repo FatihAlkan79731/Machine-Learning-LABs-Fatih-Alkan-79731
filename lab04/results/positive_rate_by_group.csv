@@ -1,0 +1,8 @@
+column,value,positive_rate
+sex,Female,0.1093
+sex,Male,0.3038
+race,Amer-Indian-Eskimo,0.1170
+race,Asian-Pac-Islander,0.2693
+race,Black,0.1208
+race,Other,0.1232
+race,White,0.2540

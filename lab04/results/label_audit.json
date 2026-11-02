@@ -1,0 +1,9 @@
+{
+  "duplicate_feature_groups": 54,
+  "rows_in_duplicate_groups": 111,
+  "conflicting_groups": 5,
+  "rows_in_conflicting_groups": 10,
+  "sample_rows_checked": 50,
+  "sample_rows_with_issues": 0,
+  "full_rows_with_issues": 4
+}

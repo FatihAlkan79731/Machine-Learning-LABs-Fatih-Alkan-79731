@@ -1,0 +1,36 @@
+config:
+  dataset:
+    name: adult
+    version: 2
+    source: OpenML (fetch_openml)
+  seed: 42
+  split:
+    test_size: 0.3
+    stratify: income
+  imputation:
+    numeric: median
+    categorical: most_frequent
+  clipping:
+    lower_percentile: 1
+    upper_percentile: 99
+  duplicates: drop exact duplicates from train only
+  derived_features:
+  - capital_net = capital-gain - capital-loss
+  - hours_per_age = hours-per-week / (age - 16)
+  baseline_model:
+    type: LogisticRegression
+    max_iter: 1000
+  label_audit:
+    sample_size: 50
+data:
+  raw_rows: 48842
+  raw_columns: 15
+  raw_sha256: 8f970e20c9991979ec0a9ccb65ce97543d678709a2c6f8ef23f7fb32f40adddc
+  train_rows_before_dedup: 34189
+  train_duplicates_dropped: 24
+  train_rows: 34165
+  test_rows: 14653
+  processed_columns: 108
+  processed_train_sha256: 253cc30268f71e65c87aa11abb131c2ce0bea34fca999719277f66f71782b862
+  processed_test_sha256: ee20c623b9330724f50ec06c25618be45c1e249ea66752de6719428be3e803b7
+  processed_sha256: 20c9dd09b20b799a0bb43da863c49661bd562fb633058f12aeee4a0c71fe9315

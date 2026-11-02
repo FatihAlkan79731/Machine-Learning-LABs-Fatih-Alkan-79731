@@ -1,0 +1,41 @@
+# Validation report
+
+| Check | Column | Status | Violations | Detail |
+|---|---|---|---|---|
+| schema: columns | * | PASS | 0 | expected 15, found 15; missing=[], extra=[] |
+| schema: type int | age | PASS | 0 | raw dtype int64; all values whole numbers: True |
+| schema: type int | fnlwgt | PASS | 0 | raw dtype int64; all values whole numbers: True |
+| schema: type int | education-num | PASS | 0 | raw dtype int64; all values whole numbers: True |
+| schema: type int | capital-gain | PASS | 0 | raw dtype int64; all values whole numbers: True |
+| schema: type int | capital-loss | PASS | 0 | raw dtype int64; all values whole numbers: True |
+| schema: type int | hours-per-week | PASS | 0 | raw dtype int64; all values whole numbers: True |
+| schema: type category | workclass | PASS | 0 | raw dtype category; 9 distinct values |
+| schema: type category | education | PASS | 0 | raw dtype category; 16 distinct values |
+| schema: type category | marital-status | PASS | 0 | raw dtype category; 7 distinct values |
+| schema: type category | occupation | PASS | 0 | raw dtype category; 15 distinct values |
+| schema: type category | relationship | PASS | 0 | raw dtype category; 6 distinct values |
+| schema: type category | race | PASS | 0 | raw dtype category; 5 distinct values |
+| schema: type category | sex | PASS | 0 | raw dtype category; 2 distinct values |
+| schema: type category | native-country | PASS | 0 | raw dtype category; 42 distinct values |
+| schema: type category | income | PASS | 0 | raw dtype category; 2 distinct values |
+| range | age | PASS | 0 | allowed 17-90; observed 17-90 |
+| range | hours-per-week | PASS | 0 | allowed 1-99; observed 1-99 |
+| range | capital-gain | PASS | 0 | allowed 0-99999; observed 0-99999 |
+| range | capital-loss | PASS | 0 | allowed 0-4356; observed 0-4356 |
+| missing ('?') | age | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | workclass | PASS | 2799 | 5.73% of rows (allowed by null policy) |
+| missing ('?') | fnlwgt | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | education | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | education-num | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | marital-status | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | occupation | PASS | 2809 | 5.75% of rows (allowed by null policy) |
+| missing ('?') | relationship | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | race | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | sex | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | capital-gain | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | capital-loss | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | hours-per-week | PASS | 0 | 0.00% of rows (allowed by null policy) |
+| missing ('?') | native-country | PASS | 857 | 1.75% of rows (allowed by null policy) |
+| label values | income | PASS | 0 | found ['<=50K', '>50K']; positive rate 23.93% |
+| duplicates: exact rows | * | PASS | 52 | reported only; removed later from train split |
+| duplicates: same features | * | PASS | 57 | rows whose 14 features repeat an earlier row (label may differ) |

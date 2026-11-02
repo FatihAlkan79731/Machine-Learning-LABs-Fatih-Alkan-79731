@@ -1,0 +1,13 @@
+[ingest] rows=48842 columns=15 (expected 48842 x 15: OK)
+[ingest] raw sha256=8f970e20c9991979ec0a9ccb65ce97543d678709a2c6f8ef23f7fb32f40adddc
+[validate] 37 checks, 0 failed (rows are kept, nothing dropped)
+[split] train=34189 test=14653; dropped 24 exact duplicates from train -> 34165; test untouched
+[transform] processed train (34165, 108), test (14653, 108)
+[hash] processed sha256=20c9dd09b20b799a0bb43da863c49661bd562fb633058f12aeee4a0c71fe9315
+[features]
+derived_features  n_features  accuracy     f1
+              no         105    0.8540 0.6601
+             yes         107    0.8578 0.6696
+[labels] {"duplicate_feature_groups": 54, "rows_in_duplicate_groups": 111, "conflicting_groups": 5, "rows_in_conflicting_groups": 10, "sample_rows_checked": 50, "sample_rows_with_issues": 0, "full_rows_with_issues": 4}
+[labels] dictionary issues on full data:
+relationship vs sex    4

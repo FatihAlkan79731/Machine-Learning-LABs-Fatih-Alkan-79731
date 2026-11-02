@@ -1,0 +1,39 @@
+{
+  "rows": 48842,
+  "columns": 15,
+  "column_names": [
+    "age",
+    "workclass",
+    "fnlwgt",
+    "education",
+    "education-num",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week",
+    "native-country",
+    "class"
+  ],
+  "dtypes": {
+    "age": "int64",
+    "workclass": "category",
+    "fnlwgt": "int64",
+    "education": "category",
+    "education-num": "int64",
+    "marital-status": "category",
+    "occupation": "category",
+    "relationship": "category",
+    "race": "category",
+    "sex": "category",
+    "capital-gain": "int64",
+    "capital-loss": "int64",
+    "hours-per-week": "int64",
+    "native-country": "category",
+    "class": "category"
+  },
+  "raw_sha256": "8f970e20c9991979ec0a9ccb65ce97543d678709a2c6f8ef23f7fb32f40adddc"
+}
