@@ -8,6 +8,8 @@ Build a two-hidden-layer neural network in plain NumPy, with no deep learning fr
 
 **Data.** `load_digits`: 1797 images of 8×8 pixels (64 features), 10 classes. Pixel values are divided by 16 to lie in [0, 1], and the labels are one-hot encoded. 70/30 stratified split with `random_state=42` (1257 train / 540 test). All seeds are fixed to 42.
 
+Photos of the hand-written design and gradient derivation: [network design](results/paper_1_design.jpg), [gradient derivation](results/paper_2_gradients.jpg).
+
 **Network design.**
 
 ```
