@@ -1,0 +1,80 @@
+# Runs the lab experiments on a GitHub-hosted runner with the pinned environment from
+# requirements.txt (Python 3.11.8, torch 2.3.1 CPU build) and pushes the results to a
+# branch ci-out/<lab>-<run id>, from where they are reviewed and merged into main.
+#
+# Trigger: edit .github/run-request, e.g.
+#   labs: lab05 lab06 lab07
+#   smoke: 0          (1 = quick pipeline test on a small data subset)
+name: run-labs
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/run-request"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  plan:
+    runs-on: ubuntu-22.04
+    outputs:
+      labs: ${{ steps.read.outputs.labs }}
+      smoke: ${{ steps.read.outputs.smoke }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: read
+        run: |
+          labs=$(grep -E '^labs:' .github/run-request | cut -d: -f2-)
+          smoke=$(grep -E '^smoke:' .github/run-request | cut -d: -f2- | tr -d ' ')
+          echo "labs=$(python3 -c 'import json,sys; print(json.dumps(sys.argv[1:]))' $labs)" >> "$GITHUB_OUTPUT"
+          echo "smoke=${smoke:-0}" >> "$GITHUB_OUTPUT"
+
+  run:
+    needs: plan
+    runs-on: ubuntu-22.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        lab: ${{ fromJSON(needs.plan.outputs.labs) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.8"
+          cache: pip
+
+      - name: Install pinned environment
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch==2.3.1 torchvision==0.18.1 --index-url https://download.pytorch.org/whl/cpu
+          grep -v -E '^(mlflow|torch|torchvision)==' requirements.txt > req-tmp.txt
+          pip install -r req-tmp.txt
+          pip install mlflow==2.14.1
+          pip install --no-deps pyarrow==16.1.0
+          rm req-tmp.txt
+          lscpu | head -20 > machine.txt; free -m >> machine.txt; nproc >> machine.txt
+
+      - name: Run ${{ matrix.lab }}
+        env:
+          LAB_SMOKE: ${{ needs.plan.outputs.smoke }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -o pipefail
+          mkdir -p ci-logs
+          python ${{ matrix.lab }}/src/run_all.py 2>&1 | tee ci-logs/${{ matrix.lab }}_log.txt
+
+      - name: Push results to a branch
+        if: always()
+        run: |
+          git config user.name "Fatih Alkan"
+          git config user.email "falkan1@stu.vistula.edu.pl"
+          branch="ci-out/${{ matrix.lab }}-${{ github.run_id }}"
+          git checkout -b "$branch"
+          mv machine.txt ci-logs/${{ matrix.lab }}_machine.txt || true
+          git add -A ${{ matrix.lab }}/results ci-logs || true
+          git commit -m "${{ matrix.lab }} results (run ${{ github.run_id }}, smoke=${{ needs.plan.outputs.smoke }}, outcome=${{ job.status }})" || true
+          for i in 1 2 3 4 5; do git push origin "$branch" && break; sleep 10; done
