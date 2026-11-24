@@ -3,8 +3,8 @@
 # branch ci-out/<lab>-<run id>, from where they are reviewed and merged into main.
 #
 # Trigger: edit .github/run-request, e.g.
-#   labs: lab05 lab06 lab07
-#   smoke: 0          (1 = quick pipeline test on a small data subset)
+#   labs: lab05 lab06 lab07       full runs
+#   smoke_labs: lab07             quick pipeline test on a small data subset
 name: run-labs
 
 on:
@@ -20,16 +20,18 @@ jobs:
   plan:
     runs-on: ubuntu-22.04
     outputs:
-      labs: ${{ steps.read.outputs.labs }}
-      smoke: ${{ steps.read.outputs.smoke }}
+      matrix: ${{ steps.read.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
       - id: read
+        shell: python
         run: |
-          labs=$(grep -E '^labs:' .github/run-request | cut -d: -f2-)
-          smoke=$(grep -E '^smoke:' .github/run-request | cut -d: -f2- | tr -d ' ')
-          echo "labs=$(python3 -c 'import json,sys; print(json.dumps(sys.argv[1:]))' $labs)" >> "$GITHUB_OUTPUT"
-          echo "smoke=${smoke:-0}" >> "$GITHUB_OUTPUT"
+          import json, os
+          req = dict(l.split(":", 1) for l in open(".github/run-request") if ":" in l)
+          items = [{"lab": l, "smoke": "0"} for l in req.get("labs", "").split()]
+          items += [{"lab": l, "smoke": "1"} for l in req.get("smoke_labs", "").split()]
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write("matrix=" + json.dumps({"include": items}) + "\n")
 
   run:
     needs: plan
@@ -37,8 +39,7 @@ jobs:
     timeout-minutes: 350
     strategy:
       fail-fast: false
-      matrix:
-        lab: ${{ fromJSON(needs.plan.outputs.labs) }}
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -60,7 +61,7 @@ jobs:
 
       - name: Run ${{ matrix.lab }}
         env:
-          LAB_SMOKE: ${{ needs.plan.outputs.smoke }}
+          LAB_SMOKE: ${{ matrix.smoke }}
           PYTHONUNBUFFERED: "1"
         run: |
           set -o pipefail
@@ -72,9 +73,9 @@ jobs:
         run: |
           git config user.name "Fatih Alkan"
           git config user.email "falkan1@stu.vistula.edu.pl"
-          branch="ci-out/${{ matrix.lab }}-${{ github.run_id }}"
+          branch="ci-out/${{ matrix.lab }}-smoke${{ matrix.smoke }}-${{ github.run_id }}"
           git checkout -b "$branch"
           mv machine.txt ci-logs/${{ matrix.lab }}_machine.txt || true
           git add -A ${{ matrix.lab }}/results ci-logs || true
-          git commit -m "${{ matrix.lab }} results (run ${{ github.run_id }}, smoke=${{ needs.plan.outputs.smoke }}, outcome=${{ job.status }})" || true
+          git commit -m "${{ matrix.lab }} results (run ${{ github.run_id }}, smoke=${{ matrix.smoke }}, outcome=${{ job.status }})" || true
           for i in 1 2 3 4 5; do git push origin "$branch" && break; sleep 10; done

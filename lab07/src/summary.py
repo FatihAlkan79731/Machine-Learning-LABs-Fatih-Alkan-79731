@@ -21,7 +21,7 @@ N_TRAIN = 55_000
 
 
 def load(kind, path, channels=None):
-    m = BigCNN(channels=channels) if kind == "big" else SmallCNN()
+    m = BigCNN(channels=channels or (32, 64, 128)) if kind == "big" else SmallCNN()
     m.load_state_dict(torch.load(path, weights_only=True))
     return m.eval()
 

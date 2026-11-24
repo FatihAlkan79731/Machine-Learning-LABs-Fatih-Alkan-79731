@@ -91,7 +91,7 @@ def main():
                 for name, m in prunable_layers(model):
                     layer_rows.append({"target_sparsity": s, "layer": name, "weights": m.weight.numel(),
                                        "layer_sparsity": float((m.weight == 0).float().mean())})
-    pd.DataFrame(rows).to_csv(RESULTS / "pruning_unstructured.csv", index=False, float_format="%.5f")
+    pd.DataFrame(rows).to_csv(RESULTS / "pruning_unstructured.csv", index=False, float_format="%.6g")
     pd.DataFrame(layer_rows).to_csv(RESULTS / "global_layer_sparsity.csv", index=False, float_format="%.4f")
     print(pd.DataFrame(rows).round(4).to_string(index=False))
 

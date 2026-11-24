@@ -34,6 +34,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
+import torch._dynamo
 import torch.fx
 from torch import nn
 
@@ -183,8 +184,6 @@ def compile_modes(model, example):
     except Exception as e:  # noqa: BLE001
         modes["jit.script"] = (None, None, f"failed: {type(e).__name__}: {e}")
     try:
-        import torch._dynamo
-
         torch._dynamo.reset()
         cm = torch.compile(model)
         modes["torch.compile"] = (cm, first_call(cm), "")
@@ -264,18 +263,22 @@ def part_c(n=2048):
     for k, v in variants.items():
         log(describe(k, v))
     w = torch.randn(n, n)
+    out_full = torch.empty(n, n)
+    out_row = torch.empty(n)
+    # Outputs are written into pre-allocated buffers (out=) where PyTorch allows it, so the
+    # timing measures the memory access pattern and not the allocation of a new 16 MB tensor.
     ops = {
-        "elementwise v*2+1": (lambda v: v * 2 + 1, 20),
-        "row sum v.sum(dim=1)": (lambda v: v.sum(dim=1), 20),
-        "softmax(dim=1)": (lambda v: torch.softmax(v, dim=1), 20),
-        "matmul v @ W": (lambda v: v @ w, 5),
-        "make contiguous": (lambda v: v.contiguous(), 20),
+        "elementwise add (out=)": (lambda v: torch.add(v, 1.0, out=out_full), 30),
+        "row sum (out=)": (lambda v: torch.sum(v, dim=1, out=out_row), 30),
+        "softmax(dim=1)": (lambda v: torch.softmax(v, dim=1), 30),
+        "matmul v @ W (out=)": (lambda v: torch.matmul(v, w, out=out_full), 5),
+        "copy into contiguous buffer": (lambda v: out_full.copy_(v), 30),
     }
     rows = []
     with torch.no_grad():
         for op, (fn, reps) in ops.items():
             for k, v in variants.items():
-                med, _ = time_call(lambda: fn(v), warmup=3, reps=reps)
+                med, _ = time_call(lambda: fn(v), warmup=5, reps=reps)
                 out = fn(v)
                 rows.append({"operation": op, "input": k, "input_contiguous": v.is_contiguous(),
                              "output_contiguous": out.is_contiguous(), "median_ms": med * 1e3})

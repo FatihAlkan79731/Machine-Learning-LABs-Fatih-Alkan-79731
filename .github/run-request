@@ -1,2 +1,2 @@
-labs: lab05 lab06 lab07
-smoke: 1
+labs: lab05 lab06
+smoke_labs: lab07
