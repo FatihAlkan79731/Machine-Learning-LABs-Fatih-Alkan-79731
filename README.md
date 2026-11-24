@@ -55,6 +55,9 @@ lab01/
 | 02 | A neural network from scratch (NumPy) | [lab02](lab02/) |
 | 03 | Architectures and their costs (MLP, CNN, attention) | [lab03](lab03/) |
 | 04 | Data pipeline and quality (UCI Adult) | [lab04](lab04/) |
+| 05 | Frameworks and automatic differentiation | [lab05](lab05/) |
+| 06 | Training pipelines and project proposal | [lab06](lab06/) |
+| 07 | Compression: pruning and distillation | [lab07](lab07/) |
 
 ## Reproducibility
 
