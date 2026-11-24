@@ -25,3 +25,6 @@ Thumbs.db
 
 # lab 6 training checkpoints
 lab06/checkpoints/
+
+# lab 7 trained weights
+lab07/models/

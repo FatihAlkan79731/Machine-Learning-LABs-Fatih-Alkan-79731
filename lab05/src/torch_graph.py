@@ -34,6 +34,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
+import torch.fx
 from torch import nn
 
 from common import RESULTS, set_seeds, time_call
@@ -182,6 +183,8 @@ def compile_modes(model, example):
     except Exception as e:  # noqa: BLE001
         modes["jit.script"] = (None, None, f"failed: {type(e).__name__}: {e}")
     try:
+        import torch._dynamo
+
         torch._dynamo.reset()
         cm = torch.compile(model)
         modes["torch.compile"] = (cm, first_call(cm), "")

@@ -29,7 +29,8 @@ class Config(dict):
         self[key] = value
 
     def to_dict(self):
-        return copy.deepcopy(dict(self))
+        """Plain nested dicts (YAML's safe_dump and pickling need no custom class)."""
+        return {k: v.to_dict() if isinstance(v, Config) else copy.deepcopy(v) for k, v in self.items()}
 
 
 def _to_config(d):
