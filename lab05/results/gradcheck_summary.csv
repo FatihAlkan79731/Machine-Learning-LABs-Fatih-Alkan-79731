@@ -1,0 +1,4 @@
+test,f_engine,f_torch,max_abs_diff_engine_vs_torch,max_abs_diff_engine_vs_numerical,max_abs_diff_torch_vs_numerical,tolerance,pass
+main: ((a*b+c)**2).relu().sum(),2.490e+01,2.490e+01,0.000e+00,3.149e-09,3.149e-09,1.000e-06,True
+"reuse: sum(e*e + e + relu(e-c)), e=a*b",1.821e+01,1.821e+01,1.110e-16,1.997e-09,1.997e-09,1.000e-06,True
+"all ops: sigmoid, log, exp, div, pow",1.851e+01,1.851e+01,2.220e-16,1.399e-09,1.399e-09,1.000e-06,True

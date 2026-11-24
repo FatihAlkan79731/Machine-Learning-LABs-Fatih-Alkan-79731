@@ -1,0 +1,208 @@
+
+=== print_versions.py ===
+Python: 3.11.8
+Implementation: CPython
+Platform: Linux-6.8.0-1070-azure-x86_64-with-glibc2.35
+Processor: x86_64
+
+package              installed                    pinned                      
+numpy                1.26.4                       1.26.4                      
+pandas               2.2.2                        2.2.2                       
+scikit-learn         1.5.0                        1.5.0                       
+scipy                1.13.1                       1.13.1                      
+matplotlib           3.9.0                        3.9.0                       
+seaborn              0.13.2                       0.13.2                      
+torch                2.3.1+cpu                    2.3.1                         <-- mismatch
+torchvision          0.18.1+cpu                   0.18.1                        <-- mismatch
+torchinfo            1.8.0                        1.8.0                       
+thop                 0.1.1-2209072238             0.1.1.post2209072238        
+onnx                 1.16.1                       1.16.1                      
+onnxruntime          1.18.0                       1.18.0                      
+mlflow               2.14.1                       2.14.1                      
+memory-profiler      0.61.0                       0.61.0                      
+psutil               5.9.8                        5.9.8                       
+codecarbon           2.4.2                        2.4.2                       
+fastapi              0.111.0                      0.111.0                     
+uvicorn              0.30.1                       0.30.1                      
+pytest               8.2.2                        8.2.2                       
+httpx                0.27.0                       0.27.0                      
+locust               2.28.0                       2.28.0                      
+requests             2.32.3                       2.32.3                      
+pyarrow              16.1.0                       16.1.0                      
+joblib               1.4.2                        1.4.2                       
+tqdm                 4.66.4                       4.66.4                      
+
+=== gradcheck.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+main: ((a*b+c)**2).relu().sum()               engine-torch=0.00e+00  engine-numerical=3.15e-09  PASS
+reuse: sum(e*e + e + relu(e-c)), e=a*b        engine-torch=1.11e-16  engine-numerical=2.00e-09  PASS
+all ops: sigmoid, log, exp, div, pow          engine-torch=2.22e-16  engine-numerical=1.40e-09  PASS
+
+single element: f = relu((a*b + c)**2) = 0.471864
+  df/da = -0.253973  (2(ab+c)·b = -0.253973)
+  df/db = 0.418635  (2(ab+c)·a = 0.418635)
+  df/dc = 1.373847  (2(ab+c)   = 1.373847)
+
+=== train_moons.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+engine: final loss 0.032878, accuracy 0.995, graph per step: 13036 nodes
+torch : final loss 0.032878; max |loss diff| over 300 epochs = 4.44e-16
+engine (Python floats)   median of 5: 37.5800 s (125.267 ms/epoch)
+PyTorch float64          median of 5: 0.1059 s (0.353 ms/epoch)
+PyTorch float32          median of 5: 0.1039 s (0.346 ms/epoch)
+
+        implementation  median_s  per_epoch_ms  torch_threads  slowdown_vs_fastest
+engine (Python floats) 37.579954    125.266512              2           361.657955
+       PyTorch float64  0.105877      0.352924              2             1.018929
+       PyTorch float32  0.103910      0.346367              2             1.000000
+
+=== torch_graph.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+==========================================================================================
+PART A - graph inspection of SmallMLP (784 -> 128 -> 64 -> 10)
+==========================================================================================
+
+--- module tree
+SmallMLP(
+  (fc1): Linear(in_features=784, out_features=128, bias=True)
+  (fc2): Linear(in_features=128, out_features=64, bias=True)
+  (fc3): Linear(in_features=64, out_features=10, bias=True)
+)
+parameters: 109,386
+
+--- torch.fx symbolic trace (the forward pass as a static graph)
+graph():
+    %x : [num_users=1] = placeholder[target=x]
+    %fc1 : [num_users=1] = call_module[target=fc1](args = (%x,), kwargs = {})
+    %relu : [num_users=1] = call_function[target=torch.relu](args = (%fc1,), kwargs = {})
+    %fc2 : [num_users=1] = call_module[target=fc2](args = (%relu,), kwargs = {})
+    %relu_1 : [num_users=1] = call_function[target=torch.relu](args = (%fc2,), kwargs = {})
+    %fc3 : [num_users=1] = call_module[target=fc3](args = (%relu_1,), kwargs = {})
+    return fc3
+generated code:
+
+
+
+def forward(self, x):
+    fc1 = self.fc1(x);  x = None
+    relu = torch.relu(fc1);  fc1 = None
+    fc2 = self.fc2(relu);  relu = None
+    relu_1 = torch.relu(fc2);  fc2 = None
+    fc3 = self.fc3(relu_1);  relu_1 = None
+    return fc3
+    
+
+--- autograd graph recorded by one forward pass (loss = out.sum())
+SumBackward0
+  AddmmBackward0
+    AccumulateGrad  <- leaf tensor (10,) requires_grad=True
+    ReluBackward0
+      AddmmBackward0
+        AccumulateGrad  <- leaf tensor (64,) requires_grad=True
+        ReluBackward0
+          AddmmBackward0
+            AccumulateGrad  <- leaf tensor (128,) requires_grad=True
+            TBackward0
+              AccumulateGrad  <- leaf tensor (128, 784) requires_grad=True
+        TBackward0
+          AccumulateGrad  <- leaf tensor (64, 128) requires_grad=True
+    TBackward0
+      AccumulateGrad  <- leaf tensor (10, 64) requires_grad=True
+
+--- TorchScript graph from torch.jit.trace
+graph(%self.1 : __torch__.SmallMLP,
+      %x : Float(32, 784, strides=[784, 1], requires_grad=0, device=cpu)):
+  %fc3 : __torch__.torch.nn.modules.linear.___torch_mangle_1.Linear = prim::GetAttr[name="fc3"](%self.1)
+  %fc2 : __torch__.torch.nn.modules.linear.___torch_mangle_0.Linear = prim::GetAttr[name="fc2"](%self.1)
+  %fc1 : __torch__.torch.nn.modules.linear.Linear = prim::GetAttr[name="fc1"](%self.1)
+  %39 : Tensor = prim::CallMethod[name="forward"](%fc1, %x)
+  %input.1 : Float(32, 128, strides=[128, 1], requires_grad=1, device=cpu) = aten::relu(%39) # /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/lab05/src/torch_graph.py:67:0
+  %40 : Tensor = prim::CallMethod[name="forward"](%fc2, %input.1)
+  %input : Float(32, 64, strides=[64, 1], requires_grad=1, device=cpu) = aten::relu(%40) # /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/lab05/src/torch_graph.py:68:0
+  %41 : Tensor = prim::CallMethod[name="forward"](%fc3, %input)
+  return (%41)
+
+
+--- tensors: shape / dtype / stride / contiguity
+input x                      shape=(32, 784)      dtype=torch.float32  stride=(784, 1)     contiguous=True  storage_offset=0
+fc1.weight                   shape=(128, 784)     dtype=torch.float32  stride=(784, 1)     contiguous=True  storage_offset=0
+fc1.bias                     shape=(128,)         dtype=torch.float32  stride=(1,)         contiguous=True  storage_offset=0
+fc2.weight                   shape=(64, 128)      dtype=torch.float32  stride=(128, 1)     contiguous=True  storage_offset=0
+fc2.bias                     shape=(64,)          dtype=torch.float32  stride=(1,)         contiguous=True  storage_offset=0
+fc3.weight                   shape=(10, 64)       dtype=torch.float32  stride=(64, 1)      contiguous=True  storage_offset=0
+fc3.bias                     shape=(10,)          dtype=torch.float32  stride=(1,)         contiguous=True  storage_offset=0
+fc1.weight.t() (view)        shape=(784, 128)     dtype=torch.float32  stride=(1, 784)     contiguous=False storage_offset=0
+x[:, ::2] (view)             shape=(32, 392)      dtype=torch.float32  stride=(784, 2)     contiguous=False storage_offset=0
+x.t().contiguous() (copy)    shape=(784, 32)      dtype=torch.float32  stride=(32, 1)      contiguous=True  storage_offset=0
+x.view(32, 28, 28)           shape=(32, 28, 28)   dtype=torch.float32  stride=(784, 28, 1) contiguous=True  storage_offset=0
+x.view(32,28,28).permute(0,2,1) shape=(32, 28, 28)   dtype=torch.float32  stride=(784, 1, 28) contiguous=False storage_offset=0
+x.t() shares storage with x: True
+x.t().view(-1) raises RuntimeError: view size is not compatible with input tensor's size and stride (at least one dimension spans across two contiguous subspaces). Use .reshape(...) instead.
+x.t().reshape(-1) works but copies: contiguous=True
+nn.Linear computes x @ W.T, i.e. it reads fc1.weight (128, 784) through a transposed view
+
+==========================================================================================
+PART B - eager vs compiled / traced
+==========================================================================================
+torch 2.3.1+cpu, Linux x86_64, threads=2
+tiny (2-8-1)               b=1    eager             median      26.7 us   max|diff| 0.0e+00
+tiny (2-8-1)               b=1    jit.trace         median      18.9 us   first call      0.7 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=1    jit.trace+freeze  median      16.3 us   first call      0.4 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=1    jit.script        median      16.7 us   first call      0.7 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=1    torch.compile     median      22.4 us   first call   7193.5 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=256  eager             median      34.2 us   max|diff| 0.0e+00
+tiny (2-8-1)               b=256  jit.trace         median      25.0 us   first call      0.8 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=256  jit.trace+freeze  median      21.7 us   first call      0.3 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=256  jit.script        median      22.1 us   first call      0.1 ms   max|diff| 0.0e+00
+tiny (2-8-1)               b=256  torch.compile     median      48.7 us   first call   1474.1 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=1    eager             median      80.0 us   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=1    jit.trace         median      70.1 us   first call      1.1 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=1    jit.trace+freeze  median      65.3 us   first call      0.4 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=1    jit.script        median      66.3 us   first call      0.8 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=1    torch.compile     median     112.3 us   first call   1466.4 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=256  eager             median    1332.2 us   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=256  jit.trace         median    1224.0 us   first call      2.5 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=256  jit.trace+freeze  median    1212.0 us   first call      1.9 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=256  jit.script        median    1215.1 us   first call      1.8 ms   max|diff| 0.0e+00
+mlp (784-512-512-10)       b=256  torch.compile     median    1289.7 us   first call   1462.2 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=1    eager             median      43.9 us   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=1    jit.trace         median      40.2 us   first call      0.8 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=1    jit.trace+freeze  median      38.1 us   first call      0.5 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=1    jit.script        median      37.9 us   first call      0.5 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=1    torch.compile     median      23.6 us   first call   1434.6 ms   max|diff| 9.5e-07
+pointwise (10 ops x 4096)  b=256  eager             median    1958.1 us   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=256  jit.trace         median    2769.2 us   first call      9.2 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=256  jit.trace+freeze  median    2793.8 us   first call      8.5 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=256  jit.script        median    2903.7 us   first call      8.9 ms   max|diff| 0.0e+00
+pointwise (10 ops x 4096)  b=256  torch.compile     median     891.1 us   first call   1418.7 ms   max|diff| 9.5e-07
+
+==========================================================================================
+PART C - contiguous vs non-contiguous (2048 x 2048 float32)
+==========================================================================================
+contiguous                   shape=(2048, 2048)   dtype=torch.float32  stride=(2048, 1)    contiguous=True  storage_offset=0
+transposed view x.t()        shape=(2048, 2048)   dtype=torch.float32  stride=(1, 2048)    contiguous=False storage_offset=0
+strided slice [:, ::2]       shape=(2048, 2048)   dtype=torch.float32  stride=(4096, 2)    contiguous=False storage_offset=0
+x.t().contiguous() copy      shape=(2048, 2048)   dtype=torch.float32  stride=(2048, 1)    contiguous=True  storage_offset=0
+elementwise add (out=) contiguous                    0.671 ms   output contiguous=True
+elementwise add (out=) transposed view x.t()         7.209 ms   output contiguous=True
+elementwise add (out=) strided slice [:, ::2]        1.715 ms   output contiguous=True
+elementwise add (out=) x.t().contiguous() copy       0.642 ms   output contiguous=True
+row sum (out=)         contiguous                    0.271 ms   output contiguous=True
+row sum (out=)         transposed view x.t()         0.332 ms   output contiguous=True
+row sum (out=)         strided slice [:, ::2]        0.744 ms   output contiguous=True
+row sum (out=)         x.t().contiguous() copy       0.271 ms   output contiguous=True
+softmax(dim=1)         contiguous                    1.480 ms   output contiguous=True
+softmax(dim=1)         transposed view x.t()        15.107 ms   output contiguous=True
+softmax(dim=1)         strided slice [:, ::2]       10.819 ms   output contiguous=True
+softmax(dim=1)         x.t().contiguous() copy       1.499 ms   output contiguous=True
+matmul v @ W (out=)    contiguous                   45.444 ms   output contiguous=True
+matmul v @ W (out=)    transposed view x.t()        49.397 ms   output contiguous=True
+matmul v @ W (out=)    strided slice [:, ::2]       49.824 ms   output contiguous=True
+matmul v @ W (out=)    x.t().contiguous() copy      47.398 ms   output contiguous=True
+copy into contiguous buffer contiguous                    0.642 ms   output contiguous=True
+copy into contiguous buffer transposed view x.t()         5.026 ms   output contiguous=True
+copy into contiguous buffer strided slice [:, ::2]        1.630 ms   output contiguous=True
+copy into contiguous buffer x.t().contiguous() copy       0.660 ms   output contiguous=True

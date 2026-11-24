@@ -1,0 +1,11 @@
+main: ((a*b+c)**2).relu().sum()
+  nodes=159 edges=158 ops={'leaf': 60, '*': 20, '+': 39, '**2': 20, 'relu': 20}
+reuse: sum(e*e + e + relu(e-c)), e=a*b
+  nodes=239 edges=298 ops={'leaf': 80, '*': 60, '+': 79, 'relu': 20}
+all ops: sigmoid, log, exp, div, pow
+  nodes=459 edges=498 ops={'leaf': 140, '**3': 20, '*': 80, '**2': 40, '+': 99, '**-1': 20, 'exp': 20, 'log': 20, 'sigmoid': 20}
+
+single element: f = relu((a*b + c)**2) = 0.471864
+  df/da = -0.253973  (2(ab+c)·b = -0.253973)
+  df/db = 0.418635  (2(ab+c)·a = 0.418635)
+  df/dc = 1.373847  (2(ab+c)   = 1.373847)
