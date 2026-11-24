@@ -22,3 +22,6 @@ emissions.csv
 .idea/
 .DS_Store
 Thumbs.db
+
+# lab 6 training checkpoints
+lab06/checkpoints/

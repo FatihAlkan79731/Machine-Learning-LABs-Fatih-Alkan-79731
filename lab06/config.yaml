@@ -1,0 +1,46 @@
+# Lab 6 - single configuration object for the Fashion-MNIST CNN (best model of Lab 3).
+# Every script reads this file; studies change single keys with --set key=value.
+experiment: lab06-fashion-mnist-cnn
+seed: 42
+
+data:
+  dataset: FashionMNIST
+  root: data                # relative to the repository root
+  val_size: 5000            # taken from the official 60k training set
+  batch_size: 128
+  num_workers: 0
+  persistent_workers: false
+  pin_memory: false
+  normalize_mean: 0.2860
+  normalize_std: 0.3530
+
+model:
+  name: CNN                 # Conv16-Pool-Conv32-Pool-Linear10, 20,490 parameters
+
+optimizer:
+  name: adam                # adam | sgd
+  lr: 0.001
+  momentum: 0.9             # sgd only
+  weight_decay: 0.0
+
+scheduler:
+  name: none                # none | step | cosine | plateau
+  step_size: 5              # step
+  gamma: 0.1                # step
+  t_max: 10                 # cosine (in epochs)
+  eta_min: 0.0              # cosine
+  factor: 0.1               # plateau
+  patience: 1               # plateau, monitors validation loss
+
+training:
+  epochs: 5
+  grad_accum_steps: 1       # optimizer step every N micro-batches
+  device: cpu
+
+checkpoint:
+  dir: lab06/checkpoints    # one sub-folder per run, not tracked by git
+  every_epoch: true
+
+mlflow:
+  tracking_uri: lab06/mlruns   # local file store, not tracked by git
+  log_model_checkpoint: true
