@@ -1,0 +1,390 @@
+
+=== print_versions.py ===
+Python: 3.11.8
+Implementation: CPython
+Platform: Linux-6.8.0-1070-azure-x86_64-with-glibc2.35
+Processor: x86_64
+
+package              installed                    pinned                      
+numpy                1.26.4                       1.26.4                      
+pandas               2.2.2                        2.2.2                       
+scikit-learn         1.5.0                        1.5.0                       
+scipy                1.13.1                       1.13.1                      
+matplotlib           3.9.0                        3.9.0                       
+seaborn              0.13.2                       0.13.2                      
+torch                2.3.1+cpu                    2.3.1                         <-- mismatch
+torchvision          0.18.1+cpu                   0.18.1                        <-- mismatch
+torchinfo            1.8.0                        1.8.0                       
+thop                 0.1.1-2209072238             0.1.1.post2209072238        
+onnx                 1.16.1                       1.16.1                      
+onnxruntime          1.18.0                       1.18.0                      
+mlflow               2.14.1                       2.14.1                      
+memory-profiler      0.61.0                       0.61.0                      
+psutil               5.9.8                        5.9.8                       
+codecarbon           2.4.2                        2.4.2                       
+fastapi              0.111.0                      0.111.0                     
+uvicorn              0.30.1                       0.30.1                      
+pytest               8.2.2                        8.2.2                       
+httpx                0.27.0                       0.27.0                      
+locust               2.28.0                       2.28.0                      
+requests             2.32.3                       2.32.3                      
+pyarrow              16.1.0                       16.1.0                      
+joblib               1.4.2                        1.4.2                       
+tqdm                 4.66.4                       4.66.4                      
+
+=== train.py --run-name baseline --tag step=1-baseline ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-images-idx3-ubyte.gz
+  0%|          | 0/26421880 [00:00<?, ?it/s]  0%|          | 65536/26421880 [00:00<01:10, 372898.34it/s]  1%|          | 229376/26421880 [00:00<00:37, 691597.05it/s]  3%|▎         | 884736/26421880 [00:00<00:12, 2042061.33it/s] 13%|█▎        | 3506176/26421880 [00:00<00:03, 6995281.76it/s] 40%|████      | 10616832/26421880 [00:00<00:00, 20349903.02it/s] 56%|█████▌    | 14778368/26421880 [00:00<00:00, 23430063.33it/s] 87%|████████▋ | 23035904/26421880 [00:01<00:00, 31222919.70it/s]100%|██████████| 26421880/26421880 [00:01<00:00, 22331619.15it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-labels-idx1-ubyte.gz
+  0%|          | 0/29515 [00:00<?, ?it/s]100%|██████████| 29515/29515 [00:00<00:00, 322788.51it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-images-idx3-ubyte.gz
+  0%|          | 0/4422102 [00:00<?, ?it/s]  1%|▏         | 65536/4422102 [00:00<00:12, 361207.61it/s]  5%|▌         | 229376/4422102 [00:00<00:06, 679416.56it/s] 20%|██        | 884736/4422102 [00:00<00:01, 2015747.38it/s] 73%|███████▎  | 3211264/4422102 [00:00<00:00, 7026664.44it/s]100%|██████████| 4422102/4422102 [00:00<00:00, 6064259.28it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-labels-idx1-ubyte.gz
+  0%|          | 0/5148 [00:00<?, ?it/s]100%|██████████| 5148/5148 [00:00<00:00, 39618856.87it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+2026/11/24 23:16:35 INFO mlflow.tracking.fluent: Experiment with name 'lab06-fashion-mnist-cnn' does not exist. Creating a new experiment.
+[baseline] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.8s  2,715 samples/s
+[baseline] epoch  2  lr=1.00e-03  train_loss=0.9265  val_loss=0.7910  val_acc=0.7109  0.7s  3,022 samples/s
+[baseline] epoch  3  lr=1.00e-03  train_loss=0.7588  val_loss=0.6819  val_acc=0.7363  0.7s  3,101 samples/s
+[baseline] epoch  4  lr=1.00e-03  train_loss=0.6631  val_loss=0.6538  val_acc=0.7227  0.7s  3,078 samples/s
+[baseline] epoch  5  lr=1.00e-03  train_loss=0.5991  val_loss=0.6107  val_acc=0.7793  0.7s  3,122 samples/s
+[baseline] test_acc=0.7744
+
+=== profile_epoch.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+STAGE:2026-11-24 23:16:45 2317:2317 ActivityProfilerController.cpp:314] Completed Stage: Warm Up
+STAGE:2026-11-24 23:16:45 2317:2317 ActivityProfilerController.cpp:320] Completed Stage: Collection
+STAGE:2026-11-24 23:16:45 2317:2317 ActivityProfilerController.cpp:324] Completed Stage: Post Processing
+                    phase  profiler_ms  profiler_share  timer_in_profiled_epoch_s  timer_share_profiled  timer_no_profiler_s  timer_share_no_profiler
+             data_loading      376.794          0.4745                     0.3769                0.4737               0.3032                   0.4715
+                  forward      177.978          0.2241                     0.1786                0.2244               0.1524                   0.2370
+                 backward      228.666          0.2880                     0.2291                0.2879               0.1783                   0.2773
+           optimizer_step       10.614          0.0134                     0.0110                0.0138               0.0089                   0.0139
+other (loop, bookkeeping)          NaN             NaN                     0.0002                0.0003               0.0002                   0.0003
+              TOTAL epoch      794.052          1.0000                     0.7958                1.0000               0.6431                   1.0000
+steps per epoch: 16, batch 128, num_workers 0, torch threads 2
+
+=== study_workers.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+num_workers=0: startup 0.02s  data-only 0.31s  epoch 0.75s  (2,733 samples/s)
+num_workers=1: startup 0.06s  data-only 0.38s  epoch 0.66s  (3,083 samples/s)
+num_workers=2: startup 0.05s  data-only 0.23s  epoch 0.66s  (3,114 samples/s)
+num_workers=4: startup 0.09s  data-only 0.20s  epoch 0.94s  (2,171 samples/s)
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/utils/data/dataloader.py:558: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+num_workers=8: startup 0.30s  data-only 0.77s  epoch 0.73s  (2,816 samples/s)
+compute only (pre-loaded batches): 0.40s
+
+ num_workers  startup_s  data_only_s  epoch_s  throughput_samples_s  data_only_samples_s  compute_only_s  data_share_estimate  torch_threads
+           0      0.021        0.305    0.749              2732.831             6709.872           0.402                0.464              2
+           1      0.056        0.383    0.664              3082.961             5347.149           0.402                0.395              2
+           2      0.051        0.232    0.658              3113.567             8823.952           0.402                0.389              2
+           4      0.089        0.198    0.943              2171.469            10365.344           0.402                0.574              2
+           8      0.303        0.769    0.727              2815.640             2664.042           0.402                0.448              2
+
+=== study_batch.py ===
+
+>>> batch_32: data.batch_size=32 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch_32] epoch  1  lr=1.00e-03  train_loss=1.1921  val_loss=0.7578  val_acc=0.6934  0.7s  2,814 samples/s
+[batch_32] epoch  2  lr=1.00e-03  train_loss=0.6648  val_loss=0.5999  val_acc=0.7637  0.7s  2,870 samples/s
+[batch_32] epoch  3  lr=1.00e-03  train_loss=0.5825  val_loss=0.5818  val_acc=0.7852  0.7s  2,852 samples/s
+[batch_32] epoch  4  lr=1.00e-03  train_loss=0.5037  val_loss=0.5644  val_acc=0.8008  0.7s  2,843 samples/s
+[batch_32] epoch  5  lr=1.00e-03  train_loss=0.4331  val_loss=0.5259  val_acc=0.8242  0.7s  2,923 samples/s
+[batch_32] test_acc=0.8291
+
+>>> batch_64: data.batch_size=64 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch_64] epoch  1  lr=1.00e-03  train_loss=1.4418  val_loss=0.8538  val_acc=0.6855  0.7s  2,903 samples/s
+[batch_64] epoch  2  lr=1.00e-03  train_loss=0.7780  val_loss=0.6905  val_acc=0.7227  0.7s  3,048 samples/s
+[batch_64] epoch  3  lr=1.00e-03  train_loss=0.6479  val_loss=0.5864  val_acc=0.7852  0.7s  3,019 samples/s
+[batch_64] epoch  4  lr=1.00e-03  train_loss=0.5579  val_loss=0.5858  val_acc=0.8008  0.7s  3,034 samples/s
+[batch_64] epoch  5  lr=1.00e-03  train_loss=0.5123  val_loss=0.5240  val_acc=0.8125  0.7s  3,007 samples/s
+[batch_64] test_acc=0.8174
+
+>>> batch_128: data.batch_size=128 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch_128] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  2,904 samples/s
+[batch_128] epoch  2  lr=1.00e-03  train_loss=0.9265  val_loss=0.7910  val_acc=0.7109  0.7s  3,070 samples/s
+[batch_128] epoch  3  lr=1.00e-03  train_loss=0.7588  val_loss=0.6819  val_acc=0.7363  0.7s  2,983 samples/s
+[batch_128] epoch  4  lr=1.00e-03  train_loss=0.6631  val_loss=0.6538  val_acc=0.7227  0.7s  3,120 samples/s
+[batch_128] epoch  5  lr=1.00e-03  train_loss=0.5991  val_loss=0.6107  val_acc=0.7793  0.7s  3,035 samples/s
+[batch_128] test_acc=0.7744
+
+>>> batch_256: data.batch_size=256 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch_256] epoch  1  lr=1.00e-03  train_loss=2.0884  val_loss=1.7018  val_acc=0.5898  0.7s  2,751 samples/s
+[batch_256] epoch  2  lr=1.00e-03  train_loss=1.3662  val_loss=1.0436  val_acc=0.6680  0.7s  2,829 samples/s
+[batch_256] epoch  3  lr=1.00e-03  train_loss=0.9226  val_loss=0.8319  val_acc=0.6973  0.7s  2,826 samples/s
+[batch_256] epoch  4  lr=1.00e-03  train_loss=0.7851  val_loss=0.7298  val_acc=0.7207  0.7s  2,839 samples/s
+[batch_256] epoch  5  lr=1.00e-03  train_loss=0.7208  val_loss=0.6735  val_acc=0.7422  0.7s  2,827 samples/s
+[batch_256] test_acc=0.7627
+
+>>> batch_512: data.batch_size=512 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch_512] epoch  1  lr=1.00e-03  train_loss=2.2327  val_loss=2.0479  val_acc=0.3770  0.8s  2,679 samples/s
+[batch_512] epoch  2  lr=1.00e-03  train_loss=1.9062  val_loss=1.6589  val_acc=0.5859  0.7s  2,958 samples/s
+[batch_512] epoch  3  lr=1.00e-03  train_loss=1.4865  val_loss=1.2481  val_acc=0.6660  0.7s  2,938 samples/s
+[batch_512] epoch  4  lr=1.00e-03  train_loss=1.1329  val_loss=0.9905  val_acc=0.6797  0.7s  2,856 samples/s
+[batch_512] epoch  5  lr=1.00e-03  train_loss=0.9280  val_loss=0.8620  val_acc=0.6953  0.7s  2,882 samples/s
+[batch_512] test_acc=0.7178
+
+ batch_size  steps_per_epoch  throughput_samples_s  train_time_5_epochs_s  peak_memory_mb  memory_before_training_mb  training_memory_increase_mb  val_acc  test_acc  final_train_loss
+         32             1719             2860.6051                 3.5802        503.8398                   441.4961                      62.3438   0.8242    0.8291            0.4331
+         64              860             3002.3556                 3.4117        506.9414                   441.4141                      65.5273   0.8125    0.8174            0.5124
+        128              430             3022.3493                 3.3901        541.1250                   441.4844                      99.6406   0.7793    0.7744            0.5991
+        256              215             2814.3386                 3.6390        558.4023                   441.3633                     117.0391   0.7422    0.7627            0.7208
+        512              108             2862.6772                 3.5815        655.2227                   441.4805                     213.7422   0.6953    0.7178            0.9280
+
+=== study_schedules.py ===
+
+>>> sched_sgd_none: optimizer.name=sgd optimizer.lr=0.05 optimizer.momentum=0.9 scheduler.name=none training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_sgd_none] epoch  1  lr=5.00e-02  train_loss=1.8243  val_loss=1.3632  val_acc=0.6016  0.7s  2,918 samples/s
+[sched_sgd_none] epoch  2  lr=5.00e-02  train_loss=0.9146  val_loss=0.8651  val_acc=0.6914  0.7s  3,099 samples/s
+[sched_sgd_none] epoch  3  lr=5.00e-02  train_loss=0.6525  val_loss=0.6006  val_acc=0.7852  0.6s  3,211 samples/s
+[sched_sgd_none] epoch  4  lr=5.00e-02  train_loss=0.5133  val_loss=0.5628  val_acc=0.7812  0.7s  3,105 samples/s
+[sched_sgd_none] epoch  5  lr=5.00e-02  train_loss=0.4411  val_loss=0.4911  val_acc=0.8242  0.6s  3,184 samples/s
+[sched_sgd_none] epoch  6  lr=5.00e-02  train_loss=0.4140  val_loss=0.5827  val_acc=0.7832  0.7s  3,097 samples/s
+[sched_sgd_none] epoch  7  lr=5.00e-02  train_loss=0.3903  val_loss=0.5140  val_acc=0.8223  0.7s  3,083 samples/s
+[sched_sgd_none] epoch  8  lr=5.00e-02  train_loss=0.3343  val_loss=0.5166  val_acc=0.8340  0.7s  3,145 samples/s
+[sched_sgd_none] epoch  9  lr=5.00e-02  train_loss=0.3273  val_loss=0.5076  val_acc=0.8281  0.7s  3,113 samples/s
+[sched_sgd_none] epoch 10  lr=5.00e-02  train_loss=0.3057  val_loss=0.5094  val_acc=0.8203  0.6s  3,173 samples/s
+[sched_sgd_none] test_acc=0.8379
+
+>>> sched_sgd_step: optimizer.name=sgd optimizer.lr=0.05 optimizer.momentum=0.9 scheduler.name=step scheduler.step_size=5 scheduler.gamma=0.1 training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_sgd_step] epoch  1  lr=5.00e-02  train_loss=1.8243  val_loss=1.3632  val_acc=0.6016  0.7s  2,898 samples/s
+[sched_sgd_step] epoch  2  lr=5.00e-02  train_loss=0.9146  val_loss=0.8651  val_acc=0.6914  0.7s  3,068 samples/s
+[sched_sgd_step] epoch  3  lr=5.00e-02  train_loss=0.6525  val_loss=0.6006  val_acc=0.7852  0.7s  3,059 samples/s
+[sched_sgd_step] epoch  4  lr=5.00e-02  train_loss=0.5133  val_loss=0.5628  val_acc=0.7812  0.7s  3,024 samples/s
+[sched_sgd_step] epoch  5  lr=5.00e-02  train_loss=0.4411  val_loss=0.4911  val_acc=0.8242  0.7s  3,054 samples/s
+[sched_sgd_step] epoch  6  lr=5.00e-03  train_loss=0.3780  val_loss=0.4847  val_acc=0.8242  0.7s  3,062 samples/s
+[sched_sgd_step] epoch  7  lr=5.00e-03  train_loss=0.3616  val_loss=0.4760  val_acc=0.8301  0.7s  3,092 samples/s
+[sched_sgd_step] epoch  8  lr=5.00e-03  train_loss=0.3550  val_loss=0.4773  val_acc=0.8281  0.7s  3,027 samples/s
+[sched_sgd_step] epoch  9  lr=5.00e-03  train_loss=0.3472  val_loss=0.4769  val_acc=0.8359  0.7s  3,041 samples/s
+[sched_sgd_step] epoch 10  lr=5.00e-03  train_loss=0.3413  val_loss=0.4857  val_acc=0.8379  0.7s  3,024 samples/s
+[sched_sgd_step] test_acc=0.8457
+
+>>> sched_sgd_cosine: optimizer.name=sgd optimizer.lr=0.05 optimizer.momentum=0.9 scheduler.name=cosine scheduler.t_max=10 training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_sgd_cosine] epoch  1  lr=5.00e-02  train_loss=1.8243  val_loss=1.3632  val_acc=0.6016  0.7s  2,779 samples/s
+[sched_sgd_cosine] epoch  2  lr=4.88e-02  train_loss=0.9200  val_loss=0.8816  val_acc=0.6895  0.7s  3,135 samples/s
+[sched_sgd_cosine] epoch  3  lr=4.52e-02  train_loss=0.6612  val_loss=0.5992  val_acc=0.7930  0.6s  3,198 samples/s
+[sched_sgd_cosine] epoch  4  lr=3.97e-02  train_loss=0.5297  val_loss=0.6160  val_acc=0.7773  0.7s  3,092 samples/s
+[sched_sgd_cosine] epoch  5  lr=3.27e-02  train_loss=0.4616  val_loss=0.5119  val_acc=0.8164  0.6s  3,157 samples/s
+[sched_sgd_cosine] epoch  6  lr=2.50e-02  train_loss=0.4098  val_loss=0.4912  val_acc=0.8320  0.7s  3,125 samples/s
+[sched_sgd_cosine] epoch  7  lr=1.73e-02  train_loss=0.3793  val_loss=0.4822  val_acc=0.8320  0.7s  3,113 samples/s
+[sched_sgd_cosine] epoch  8  lr=1.03e-02  train_loss=0.3591  val_loss=0.4748  val_acc=0.8340  0.7s  3,100 samples/s
+[sched_sgd_cosine] epoch  9  lr=4.77e-03  train_loss=0.3399  val_loss=0.4742  val_acc=0.8340  0.7s  3,051 samples/s
+[sched_sgd_cosine] epoch 10  lr=1.22e-03  train_loss=0.3312  val_loss=0.4731  val_acc=0.8340  0.7s  3,063 samples/s
+[sched_sgd_cosine] test_acc=0.8438
+
+>>> sched_sgd_plateau: optimizer.name=sgd optimizer.lr=0.05 optimizer.momentum=0.9 scheduler.name=plateau scheduler.patience=1 scheduler.factor=0.1 training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_sgd_plateau] epoch  1  lr=5.00e-02  train_loss=1.8243  val_loss=1.3632  val_acc=0.6016  0.7s  2,818 samples/s
+[sched_sgd_plateau] epoch  2  lr=5.00e-02  train_loss=0.9146  val_loss=0.8651  val_acc=0.6914  0.7s  3,130 samples/s
+[sched_sgd_plateau] epoch  3  lr=5.00e-02  train_loss=0.6525  val_loss=0.6006  val_acc=0.7852  0.7s  3,056 samples/s
+[sched_sgd_plateau] epoch  4  lr=5.00e-02  train_loss=0.5133  val_loss=0.5628  val_acc=0.7812  0.7s  3,061 samples/s
+[sched_sgd_plateau] epoch  5  lr=5.00e-02  train_loss=0.4411  val_loss=0.4911  val_acc=0.8242  0.7s  3,114 samples/s
+[sched_sgd_plateau] epoch  6  lr=5.00e-02  train_loss=0.4140  val_loss=0.5827  val_acc=0.7832  0.7s  3,049 samples/s
+[sched_sgd_plateau] epoch  7  lr=5.00e-02  train_loss=0.3903  val_loss=0.5140  val_acc=0.8223  0.7s  3,064 samples/s
+[sched_sgd_plateau] epoch  8  lr=5.00e-03  train_loss=0.3165  val_loss=0.4663  val_acc=0.8496  0.7s  3,065 samples/s
+[sched_sgd_plateau] epoch  9  lr=5.00e-03  train_loss=0.2969  val_loss=0.4666  val_acc=0.8477  0.7s  3,063 samples/s
+[sched_sgd_plateau] epoch 10  lr=5.00e-03  train_loss=0.2886  val_loss=0.4752  val_acc=0.8457  0.7s  3,105 samples/s
+[sched_sgd_plateau] test_acc=0.8535
+
+>>> sched_adam_none: optimizer.name=adam optimizer.lr=0.001 scheduler.name=none training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_adam_none] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  2,829 samples/s
+[sched_adam_none] epoch  2  lr=1.00e-03  train_loss=0.9265  val_loss=0.7910  val_acc=0.7109  0.6s  3,160 samples/s
+[sched_adam_none] epoch  3  lr=1.00e-03  train_loss=0.7588  val_loss=0.6819  val_acc=0.7363  0.6s  3,162 samples/s
+[sched_adam_none] epoch  4  lr=1.00e-03  train_loss=0.6631  val_loss=0.6538  val_acc=0.7227  0.7s  3,144 samples/s
+[sched_adam_none] epoch  5  lr=1.00e-03  train_loss=0.5991  val_loss=0.6107  val_acc=0.7793  0.6s  3,155 samples/s
+[sched_adam_none] epoch  6  lr=1.00e-03  train_loss=0.5534  val_loss=0.5851  val_acc=0.7715  0.7s  3,149 samples/s
+[sched_adam_none] epoch  7  lr=1.00e-03  train_loss=0.5125  val_loss=0.5265  val_acc=0.8125  0.6s  3,169 samples/s
+[sched_adam_none] epoch  8  lr=1.00e-03  train_loss=0.4842  val_loss=0.5333  val_acc=0.8086  0.6s  3,170 samples/s
+[sched_adam_none] epoch  9  lr=1.00e-03  train_loss=0.4708  val_loss=0.5431  val_acc=0.7988  0.6s  3,172 samples/s
+[sched_adam_none] epoch 10  lr=1.00e-03  train_loss=0.4456  val_loss=0.5438  val_acc=0.8047  0.6s  3,177 samples/s
+[sched_adam_none] test_acc=0.8320
+
+>>> sched_adam_step: optimizer.name=adam optimizer.lr=0.001 scheduler.name=step scheduler.step_size=5 scheduler.gamma=0.1 training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_adam_step] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  2,783 samples/s
+[sched_adam_step] epoch  2  lr=1.00e-03  train_loss=0.9265  val_loss=0.7910  val_acc=0.7109  0.7s  2,962 samples/s
+[sched_adam_step] epoch  3  lr=1.00e-03  train_loss=0.7588  val_loss=0.6819  val_acc=0.7363  0.7s  3,046 samples/s
+[sched_adam_step] epoch  4  lr=1.00e-03  train_loss=0.6631  val_loss=0.6538  val_acc=0.7227  0.7s  2,890 samples/s
+[sched_adam_step] epoch  5  lr=1.00e-03  train_loss=0.5991  val_loss=0.6107  val_acc=0.7793  0.7s  3,042 samples/s
+[sched_adam_step] epoch  6  lr=1.00e-04  train_loss=0.5524  val_loss=0.5825  val_acc=0.7812  0.7s  3,015 samples/s
+[sched_adam_step] epoch  7  lr=1.00e-04  train_loss=0.5365  val_loss=0.5672  val_acc=0.7910  0.7s  3,012 samples/s
+[sched_adam_step] epoch  8  lr=1.00e-04  train_loss=0.5297  val_loss=0.5646  val_acc=0.7852  0.7s  2,948 samples/s
+[sched_adam_step] epoch  9  lr=1.00e-04  train_loss=0.5235  val_loss=0.5616  val_acc=0.7852  0.7s  3,000 samples/s
+[sched_adam_step] epoch 10  lr=1.00e-04  train_loss=0.5191  val_loss=0.5623  val_acc=0.7832  0.7s  3,008 samples/s
+[sched_adam_step] test_acc=0.8066
+
+>>> sched_adam_cosine: optimizer.name=adam optimizer.lr=0.001 scheduler.name=cosine scheduler.t_max=10 training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_adam_cosine] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  2,973 samples/s
+[sched_adam_cosine] epoch  2  lr=9.76e-04  train_loss=0.9283  val_loss=0.7973  val_acc=0.7109  0.6s  3,173 samples/s
+[sched_adam_cosine] epoch  3  lr=9.05e-04  train_loss=0.7601  val_loss=0.6859  val_acc=0.7402  0.6s  3,194 samples/s
+[sched_adam_cosine] epoch  4  lr=7.94e-04  train_loss=0.6657  val_loss=0.6399  val_acc=0.7578  0.6s  3,183 samples/s
+[sched_adam_cosine] epoch  5  lr=6.55e-04  train_loss=0.6123  val_loss=0.6221  val_acc=0.7832  0.6s  3,197 samples/s
+[sched_adam_cosine] epoch  6  lr=5.00e-04  train_loss=0.5893  val_loss=0.5828  val_acc=0.7988  0.6s  3,200 samples/s
+[sched_adam_cosine] epoch  7  lr=3.45e-04  train_loss=0.5456  val_loss=0.5652  val_acc=0.7910  0.6s  3,179 samples/s
+[sched_adam_cosine] epoch  8  lr=2.06e-04  train_loss=0.5303  val_loss=0.5674  val_acc=0.7871  0.6s  3,170 samples/s
+[sched_adam_cosine] epoch  9  lr=9.55e-05  train_loss=0.5163  val_loss=0.5570  val_acc=0.7891  0.6s  3,198 samples/s
+[sched_adam_cosine] epoch 10  lr=2.45e-05  train_loss=0.5108  val_loss=0.5570  val_acc=0.7832  0.7s  3,146 samples/s
+[sched_adam_cosine] test_acc=0.8135
+
+>>> sched_adam_plateau: optimizer.name=adam optimizer.lr=0.001 scheduler.name=plateau scheduler.patience=1 scheduler.factor=0.1 training.epochs=10 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[sched_adam_plateau] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  2,960 samples/s
+[sched_adam_plateau] epoch  2  lr=1.00e-03  train_loss=0.9265  val_loss=0.7910  val_acc=0.7109  0.6s  3,152 samples/s
+[sched_adam_plateau] epoch  3  lr=1.00e-03  train_loss=0.7588  val_loss=0.6819  val_acc=0.7363  0.7s  3,138 samples/s
+[sched_adam_plateau] epoch  4  lr=1.00e-03  train_loss=0.6631  val_loss=0.6538  val_acc=0.7227  0.7s  3,150 samples/s
+[sched_adam_plateau] epoch  5  lr=1.00e-03  train_loss=0.5991  val_loss=0.6107  val_acc=0.7793  0.7s  3,136 samples/s
+[sched_adam_plateau] epoch  6  lr=1.00e-03  train_loss=0.5534  val_loss=0.5851  val_acc=0.7715  0.7s  3,144 samples/s
+[sched_adam_plateau] epoch  7  lr=1.00e-03  train_loss=0.5125  val_loss=0.5265  val_acc=0.8125  0.7s  3,141 samples/s
+[sched_adam_plateau] epoch  8  lr=1.00e-03  train_loss=0.4842  val_loss=0.5333  val_acc=0.8086  0.7s  3,108 samples/s
+[sched_adam_plateau] epoch  9  lr=1.00e-03  train_loss=0.4708  val_loss=0.5431  val_acc=0.7988  0.6s  3,161 samples/s
+[sched_adam_plateau] epoch 10  lr=1.00e-04  train_loss=0.4294  val_loss=0.5073  val_acc=0.8301  0.6s  3,155 samples/s
+[sched_adam_plateau] test_acc=0.8486
+
+optimizer scheduler  final_val_acc  best_val_acc  test_acc  final_train_loss  final_val_loss  final_lr  train_time_s
+      sgd      none         0.8203        0.8340    0.8379            0.3057          0.5094    0.0500        6.5832
+      sgd      step         0.8379        0.8379    0.8457            0.3413          0.4857    0.0050        6.7498
+      sgd    cosine         0.8340        0.8340    0.8438            0.3312          0.4731    0.0012        6.6554
+      sgd   plateau         0.8457        0.8496    0.8535            0.2886          0.4752    0.0050        6.7142
+     adam      none         0.8047        0.8125    0.8320            0.4456          0.5438    0.0010        6.5528
+     adam      step         0.7832        0.7910    0.8066            0.5191          0.5623    0.0001        6.8994
+     adam    cosine         0.7832        0.7988    0.8135            0.5108          0.5570    0.0000        6.4813
+     adam   plateau         0.8301        0.8301    0.8486            0.4294          0.5073    0.0001        6.5572
+
+=== study_accumulation.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+   parameter  numel  max_abs_diff  max_abs_grad  relative_diff
+net.0.weight    144  9.126961e-08      0.019837   2.809394e-06
+  net.0.bias     16  9.126961e-08      0.012792   4.463909e-06
+net.3.weight   4608  1.192093e-07      0.052539   1.287330e-06
+  net.3.bias     32  5.681068e-08      0.016565   1.666680e-06
+net.7.weight  15680  3.725290e-08      0.064440   1.730727e-07
+  net.7.bias     10  3.725290e-09      0.029249   9.710156e-08
+
+>>> batch256_accum1: data.batch_size=256 training.grad_accum_steps=1 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch256_accum1] epoch  1  lr=1.00e-03  train_loss=2.0884  val_loss=1.7018  val_acc=0.5898  0.7s  2,857 samples/s
+[batch256_accum1] epoch  2  lr=1.00e-03  train_loss=1.3662  val_loss=1.0436  val_acc=0.6680  0.7s  3,042 samples/s
+[batch256_accum1] epoch  3  lr=1.00e-03  train_loss=0.9226  val_loss=0.8319  val_acc=0.6973  0.7s  2,932 samples/s
+[batch256_accum1] epoch  4  lr=1.00e-03  train_loss=0.7851  val_loss=0.7298  val_acc=0.7207  0.7s  2,964 samples/s
+[batch256_accum1] epoch  5  lr=1.00e-03  train_loss=0.7208  val_loss=0.6735  val_acc=0.7422  0.7s  2,948 samples/s
+[batch256_accum1] test_acc=0.7627
+
+>>> batch64_accum4: data.batch_size=64 training.grad_accum_steps=4 training.epochs=5 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[batch64_accum4] epoch  1  lr=1.00e-03  train_loss=2.0884  val_loss=1.7018  val_acc=0.5898  0.7s  3,110 samples/s
+[batch64_accum4] epoch  2  lr=1.00e-03  train_loss=1.3662  val_loss=1.0436  val_acc=0.6680  0.6s  3,215 samples/s
+[batch64_accum4] epoch  3  lr=1.00e-03  train_loss=0.9226  val_loss=0.8319  val_acc=0.6973  0.6s  3,160 samples/s
+[batch64_accum4] epoch  4  lr=1.00e-03  train_loss=0.7851  val_loss=0.7298  val_acc=0.7207  0.7s  3,091 samples/s
+[batch64_accum4] epoch  5  lr=1.00e-03  train_loss=0.7208  val_loss=0.6735  val_acc=0.7422  0.7s  3,066 samples/s
+[batch64_accum4] test_acc=0.7627
+
+            run  micro_batch  accum_steps  effective_batch  val_acc  test_acc  train_time_s  throughput_samples_s  peak_memory_mb  training_memory_increase_mb  max_abs_diff_train_loss_per_epoch  max_abs_diff_val_acc_per_epoch
+batch256_accum1          256            1              256 0.742188  0.762695      3.474300           2948.552261      573.074219                   131.683594                           0.000002                             0.0
+ batch64_accum4           64            4              256 0.742188  0.762695      3.274091           3128.479156      560.550781                   118.976562                           0.000002                             0.0
+
+=== study_resume.py ===
+
+>>> resume_reference: training.epochs=6 scheduler.name=cosine scheduler.t_max=6 
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[resume_reference] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  2,973 samples/s
+[resume_reference] epoch  2  lr=9.33e-04  train_loss=0.9315  val_loss=0.8078  val_acc=0.7070  0.7s  3,145 samples/s
+[resume_reference] epoch  3  lr=7.50e-04  train_loss=0.7627  val_loss=0.6880  val_acc=0.7363  0.7s  3,122 samples/s
+[resume_reference] epoch  4  lr=5.00e-04  train_loss=0.6687  val_loss=0.6550  val_acc=0.7559  0.7s  3,103 samples/s
+[resume_reference] epoch  5  lr=2.50e-04  train_loss=0.6341  val_loss=0.6363  val_acc=0.7520  0.7s  3,126 samples/s
+[resume_reference] epoch  6  lr=6.70e-05  train_loss=0.6141  val_loss=0.6244  val_acc=0.7695  0.7s  3,060 samples/s
+[resume_reference] test_acc=0.7822
+
+>>> resume_interrupted: training.epochs=6 scheduler.name=cosine scheduler.t_max=6 --stop-after 3
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[resume_interrupted] epoch  1  lr=1.00e-03  train_loss=1.7893  val_loss=1.1348  val_acc=0.5918  0.7s  3,124 samples/s
+[resume_interrupted] epoch  2  lr=9.33e-04  train_loss=0.9315  val_loss=0.8078  val_acc=0.7070  0.6s  3,205 samples/s
+[resume_interrupted] epoch  3  lr=7.50e-04  train_loss=0.7627  val_loss=0.6880  val_acc=0.7363  0.6s  3,200 samples/s
+[resume_interrupted] stopped after epoch 3 (simulated interruption)
+
+>>> resume_interrupted:  --resume /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/lab06/checkpoints/resume_interrupted/epoch_03.pt
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+resumed from /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/lab06/checkpoints/resume_interrupted/epoch_03.pt at epoch 4
+[resume_interrupted] epoch  4  lr=5.00e-04  train_loss=0.6687  val_loss=0.6550  val_acc=0.7559  0.7s  2,981 samples/s
+[resume_interrupted] epoch  5  lr=2.50e-04  train_loss=0.6341  val_loss=0.6363  val_acc=0.7520  0.6s  3,163 samples/s
+[resume_interrupted] epoch  6  lr=6.70e-05  train_loss=0.6141  val_loss=0.6244  val_acc=0.7695  0.7s  3,099 samples/s
+[resume_interrupted] test_acc=0.7822
+ epoch  lr_reference  lr_resumed  train_loss_reference  train_loss_resumed  val_acc_reference  val_acc_resumed  abs_diff_lr  abs_diff_train_loss  abs_diff_val_loss  abs_diff_val_acc
+     1      0.001000    0.001000              1.789253            1.789253           0.591797         0.591797          0.0                  0.0                0.0               0.0
+     2      0.000933    0.000933              0.931546            0.931546           0.707031         0.707031          0.0                  0.0                0.0               0.0
+     3      0.000750    0.000750              0.762659            0.762659           0.736328         0.736328          0.0                  0.0                0.0               0.0
+     4      0.000500    0.000500              0.668723            0.668723           0.755859         0.755859          0.0                  0.0                0.0               0.0
+     5      0.000250    0.000250              0.634075            0.634075           0.751953         0.751953          0.0                  0.0                0.0               0.0
+     6      0.000067    0.000067              0.614122            0.614122           0.769531         0.769531          0.0                  0.0                0.0               0.0
+test accuracy: reference 0.7822, interrupted+resumed 0.7822; same MLflow run id before/after resume: 0d7403e249b74b68a5840c555db4a1db
+
+=== export_mlflow.py ===
+24 MLflow runs exported to results/mlflow_runs.csv
+tags.mlflow.runName   status  metrics.val_acc  metrics.test_acc
+           baseline FINISHED         0.779297          0.774414
+  profile_one_epoch FINISHED              NaN               NaN
+          workers_0 FINISHED              NaN               NaN
+          workers_1 FINISHED              NaN               NaN
+          workers_2 FINISHED              NaN               NaN
+          workers_4 FINISHED              NaN               NaN
+          workers_8 FINISHED              NaN               NaN
+           batch_32 FINISHED         0.824219          0.829102
+           batch_64 FINISHED         0.812500          0.817383
+          batch_128 FINISHED         0.779297          0.774414
+          batch_256 FINISHED         0.742188          0.762695
+          batch_512 FINISHED         0.695312          0.717773
+     sched_sgd_none FINISHED         0.820312          0.837891
+     sched_sgd_step FINISHED         0.837891          0.845703
+   sched_sgd_cosine FINISHED         0.833984          0.843750
+  sched_sgd_plateau FINISHED         0.845703          0.853516
+    sched_adam_none FINISHED         0.804688          0.832031
+    sched_adam_step FINISHED         0.783203          0.806641
+  sched_adam_cosine FINISHED         0.783203          0.813477
+ sched_adam_plateau FINISHED         0.830078          0.848633
+    batch256_accum1 FINISHED         0.742188          0.762695
+     batch64_accum4 FINISHED         0.742188          0.762695
+   resume_reference FINISHED         0.769531          0.782227
+ resume_interrupted FINISHED         0.769531          0.782227

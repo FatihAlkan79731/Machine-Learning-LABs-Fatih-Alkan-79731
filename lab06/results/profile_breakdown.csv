@@ -1,0 +1,7 @@
+phase,profiler_ms,profiler_share,timer_in_profiled_epoch_s,timer_share_profiled,timer_no_profiler_s,timer_share_no_profiler
+data_loading,376.7940,0.4745,0.3769,0.4737,0.3032,0.4715
+forward,177.9780,0.2241,0.1786,0.2244,0.1524,0.2370
+backward,228.6660,0.2880,0.2291,0.2879,0.1783,0.2773
+optimizer_step,10.6140,0.0134,0.0110,0.0138,0.0089,0.0139
+"other (loop, bookkeeping)",,,0.0002,0.0003,0.0002,0.0003
+TOTAL epoch,794.0520,1.0000,0.7958,1.0000,0.6431,1.0000

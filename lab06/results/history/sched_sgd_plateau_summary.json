@@ -1,0 +1,21 @@
+{
+  "run_name": "sched_sgd_plateau",
+  "mlflow_run_id": "75612db564ec4431aaeb86a6f0053f38",
+  "epochs_done": 10,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "sgd",
+  "scheduler": "plateau",
+  "num_workers": 0,
+  "final_val_acc": 0.845703125,
+  "final_val_loss": 0.4751593619585037,
+  "best_val_acc": 0.849609375,
+  "train_time_s": 6.714187036999988,
+  "mean_throughput_samples_s": 3052.6329987021927,
+  "memory_before_training_mb": 441.41015625,
+  "peak_memory_mb": 523.94921875,
+  "test_loss": 0.41683240234851837,
+  "test_acc": 0.853515625
+}

@@ -1,0 +1,7 @@
+parameter,numel,max_abs_diff,max_abs_grad,relative_diff
+net.0.weight,144,9.127e-08,1.984e-02,2.809e-06
+net.0.bias,16,9.127e-08,1.279e-02,4.464e-06
+net.3.weight,4608,1.192e-07,5.254e-02,1.287e-06
+net.3.bias,32,5.681e-08,1.657e-02,1.667e-06
+net.7.weight,15680,3.725e-08,6.444e-02,1.731e-07
+net.7.bias,10,3.725e-09,2.925e-02,9.710e-08

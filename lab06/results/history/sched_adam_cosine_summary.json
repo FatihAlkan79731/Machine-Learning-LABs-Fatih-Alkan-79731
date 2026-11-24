@@ -1,0 +1,21 @@
+{
+  "run_name": "sched_adam_cosine",
+  "mlflow_run_id": "73c730e779f34be680e1e438f7975ecb",
+  "epochs_done": 10,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "adam",
+  "scheduler": "cosine",
+  "num_workers": 0,
+  "final_val_acc": 0.783203125,
+  "final_val_loss": 0.5570216476917267,
+  "best_val_acc": 0.798828125,
+  "train_time_s": 6.481278453000414,
+  "mean_throughput_samples_s": 3161.2676377985035,
+  "memory_before_training_mb": 441.5,
+  "peak_memory_mb": 528.953125,
+  "test_loss": 0.5305732637643814,
+  "test_acc": 0.8134765625
+}

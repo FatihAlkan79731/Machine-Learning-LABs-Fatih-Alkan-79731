@@ -1,0 +1,21 @@
+{
+  "run_name": "resume_interrupted",
+  "mlflow_run_id": "0d7403e249b74b68a5840c555db4a1db",
+  "epochs_done": 6,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "adam",
+  "scheduler": "cosine",
+  "num_workers": 0,
+  "final_val_acc": 0.76953125,
+  "final_val_loss": 0.6244004964828491,
+  "best_val_acc": 0.76953125,
+  "train_time_s": 3.929918531999874,
+  "mean_throughput_samples_s": 3128.6837087224976,
+  "memory_before_training_mb": 442.0078125,
+  "peak_memory_mb": 539.23046875,
+  "test_loss": 0.6104948222637177,
+  "test_acc": 0.7822265625
+}

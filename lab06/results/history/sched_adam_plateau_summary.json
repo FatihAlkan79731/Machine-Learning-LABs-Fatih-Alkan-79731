@@ -1,0 +1,21 @@
+{
+  "run_name": "sched_adam_plateau",
+  "mlflow_run_id": "fe1ecde60e3349c8b792657c62520340",
+  "epochs_done": 10,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "adam",
+  "scheduler": "plateau",
+  "num_workers": 0,
+  "final_val_acc": 0.830078125,
+  "final_val_loss": 0.5072803646326065,
+  "best_val_acc": 0.830078125,
+  "train_time_s": 6.557240319000016,
+  "mean_throughput_samples_s": 3124.3394405970553,
+  "memory_before_training_mb": 441.4765625,
+  "peak_memory_mb": 540.6640625,
+  "test_loss": 0.46525491774082184,
+  "test_acc": 0.8486328125
+}
