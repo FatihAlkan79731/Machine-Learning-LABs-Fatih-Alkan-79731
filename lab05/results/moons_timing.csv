@@ -1,0 +1,4 @@
+implementation,median_s,per_epoch_ms,runs_s,torch_threads,slowdown_vs_fastest
+engine (Python floats),37.58,125.267,37.9281 37.5800 37.6763 37.5599 37.4013,2,361.658
+PyTorch float64,0.105877,0.352924,0.1064 0.1059 0.1028 0.1047 0.1063,2,1.01893
+PyTorch float32,0.10391,0.346367,0.1010 0.1039 0.1029 0.1040 0.1044,2,1

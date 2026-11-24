@@ -1,0 +1,21 @@
+operation,input,input_contiguous,output_contiguous,median_ms,slowdown_vs_contiguous
+elementwise add (out=),contiguous,True,True,0.6715,1
+elementwise add (out=),transposed view x.t(),False,True,7.209,10.74
+elementwise add (out=),"strided slice [:, ::2]",False,True,1.715,2.554
+elementwise add (out=),x.t().contiguous() copy,True,True,0.642,0.9562
+row sum (out=),contiguous,True,True,0.2713,1
+row sum (out=),transposed view x.t(),False,True,0.3321,1.224
+row sum (out=),"strided slice [:, ::2]",False,True,0.7439,2.742
+row sum (out=),x.t().contiguous() copy,True,True,0.2711,0.9994
+softmax(dim=1),contiguous,True,True,1.48,1
+softmax(dim=1),transposed view x.t(),False,True,15.11,10.21
+softmax(dim=1),"strided slice [:, ::2]",False,True,10.82,7.31
+softmax(dim=1),x.t().contiguous() copy,True,True,1.499,1.013
+matmul v @ W (out=),contiguous,True,True,45.44,1
+matmul v @ W (out=),transposed view x.t(),False,True,49.4,1.087
+matmul v @ W (out=),"strided slice [:, ::2]",False,True,49.82,1.096
+matmul v @ W (out=),x.t().contiguous() copy,True,True,47.4,1.043
+copy into contiguous buffer,contiguous,True,True,0.6423,1
+copy into contiguous buffer,transposed view x.t(),False,True,5.026,7.826
+copy into contiguous buffer,"strided slice [:, ::2]",False,True,1.63,2.537
+copy into contiguous buffer,x.t().contiguous() copy,True,True,0.66,1.028
