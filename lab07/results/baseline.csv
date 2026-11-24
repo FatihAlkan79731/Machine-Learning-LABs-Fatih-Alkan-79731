@@ -1,0 +1,2 @@
+model,params,size_bytes,size_on_disk_bytes,flops_per_image,val_acc,test_acc,train_time_s,train_energy_kwh,inference_energy_kwh_per_1k,latency_b1_ms,latency_b256_ms,threads
+baseline BigCNN,997434,3992888,3993478,16711488,0.830078,0.834961,8.0051,0.000126669,3.42637e-06,0.38723,65.9535,2

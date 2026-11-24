@@ -1,0 +1,5 @@
+model,test_acc_mean,test_acc_std,agreement_with_teacher,train_time_s,params,size_bytes,flops_per_image,latency_b1_ms,latency_b256_ms,inference_energy_kwh_per_1k,train_energy_kwh
+teacher (baseline BigCNN),0.834961,0,1,,997434,3992888,16711488,0.387971,67.5604,3.58235e-06,
+student plain,0.806641,0.00292969,0.872396,2.77451,103750,418488,3556944,0.185252,17.7456,9.56661e-07,4.51321e-05
+student kd_manual,0.785482,0.0104421,0.873698,2.81243,103750,418488,3556944,0.185252,17.7456,9.56661e-07,4.5419e-05
+student kd_hinton,0.788411,0.00203288,0.880208,2.83828,103750,418488,3556944,0.185252,17.7456,9.56661e-07,4.5955e-05
