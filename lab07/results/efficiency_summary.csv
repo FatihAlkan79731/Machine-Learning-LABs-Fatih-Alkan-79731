@@ -1,0 +1,6 @@
+model,data_training_recipe,data_samples_processed,data_depends_on,model_params,model_nonzero_params,model_size_dense_MB,model_size_best_sparse_MB,test_acc,compute_flops_executed,compute_flops_nonzero,compute_latency_b1_ms,compute_latency_b256_ms,energy_training_kwh_total,energy_inference_kwh_per_1k_images
+Dense baseline,"10 epochs, hard labels",550000,-,997434,997434,3.80791,3.92777,0.833984,16711488,16711488,0.460246,70.4529,0.000524662,1.29646e-05
+Unstructured global 90 %,baseline + 3 fine-tune epochs,715000,needs the trained baseline,997434,100084,3.80791,0.504678,0.851562,16711488,8315851,0.473236,81.1064,0.00067752,1.27151e-05
+Structured 50 % filters,baseline + 3 fine-tune epochs,715000,needs the trained baseline,476474,476474,1.82061,1.8784,0.832031,4744512,4744512,0.290773,21.7783,0.000591846,3.61928e-06
+"Student, no teacher","10 epochs, hard labels",550000,-,103750,103750,0.399101,0.412148,0.813477,3556944,3556944,0.235685,20.2674,0.0002,3.31558e-06
+"Student, distilled (T=4, α=0.5)","10 epochs, hard + teacher soft labels",605000,needs the trained teacher + 1 teacher pass,103750,103750,0.399101,0.412148,0.791016,3556944,3556944,0.23767,20.2893,0.000724662,3.2856e-06

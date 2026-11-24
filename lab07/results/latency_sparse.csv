@@ -1,0 +1,9 @@
+model,format,latency_b1_ms,latency_b256_ms,test_acc,flops_executed,flops_nonzero,max_abs_diff_vs_dense_format,speedup_b1,speedup_b256
+baseline (dense),dense,0.47221,80.902,0.83398,1.6711e+07,,,1,1
+global 90% sparse,dense storage (zeros kept),0.47725,82.038,0.85156,1.6711e+07,8.3159e+06,,0.98945,0.98616
+global 90% sparse,fc layers as CSR,0.53458,82.01,0.85156,,8.3159e+06,3.8147e-06,0.88334,0.9865
+global 95% sparse,dense storage (zeros kept),0.47836,84.384,0.82715,1.6711e+07,6.1053e+06,,0.98716,0.95874
+global 95% sparse,fc layers as CSR,0.50368,81.358,0.82715,,6.1053e+06,2.3842e-06,0.93753,0.9944
+structured 10% filters,smaller dense,0.4351,52.532,0.85938,1.3917e+07,,,1.0853,1.5401
+structured 25% filters,smaller dense,0.37681,59.893,0.84277,9.8248e+06,,,1.2532,1.3508
+structured 50% filters,smaller dense,0.28582,22.992,0.83203,4.7445e+06,,,1.6521,3.5187
