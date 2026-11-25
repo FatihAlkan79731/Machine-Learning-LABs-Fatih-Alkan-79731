@@ -12,7 +12,7 @@ Reading: Reddi, Ch. 7 *AI Frameworks* (§7.3 computation graphs and automatic di
 
 All steps run with one command: `python lab05/src/run_all.py`.
 
-**Measurement environment.** The results in this report were produced with the pinned environment of `requirements.txt` (Python 3.11.8, torch 2.3.1 CPU build) on a GitHub-hosted Linux runner: Intel Xeon Platinum 8370C, 2 physical cores / 4 logical CPUs, 16 GB RAM, PyTorch using 2 threads (`results/versions.txt`). The workflow is `.github/workflows/run-labs.yml`. Absolute times differ from my laptop used in Labs 1–4; the comparisons inside this lab all come from the same machine and the same process. On Linux, `torch.compile` is supported, so the comparison includes it next to the TorchScript modes.
+**Measurement environment.** The results in this report were produced with the pinned environment of `requirements.txt` (Python 3.11.8, torch 2.3.1 CPU build) on a GitHub-hosted Linux runner: Intel Xeon Platinum 8370C, 2 physical cores / 4 logical CPUs, 16 GB RAM, PyTorch using 2 threads (`results/versions.txt`). Absolute times differ from my laptop used in Labs 1–4; the comparisons inside this lab all come from the same machine and the same process. On Linux, `torch.compile` is supported, so the comparison includes it next to the TorchScript modes.
 
 | Step | Script | Output |
 |---|---|---|

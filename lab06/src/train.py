@@ -19,7 +19,6 @@ Features
 """
 import argparse
 import json
-import os
 import random
 import time
 from pathlib import Path
@@ -31,7 +30,7 @@ import psutil
 import torch
 import yaml
 from torch import nn
-from torch.utils.data import DataLoader, Subset, random_split
+from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 
 from config import RESULTS, ROOT, flatten, load_config
@@ -75,8 +74,6 @@ def get_datasets(cfg):
     n_val = cfg.data.val_size
     train, val = random_split(full_train, [len(full_train) - n_val, n_val],
                               generator=torch.Generator().manual_seed(cfg.seed))
-    if os.environ.get("LAB_SMOKE") == "1":   # quick pipeline test on a small subset (CI only)
-        train, val, test = Subset(train, range(2048)), Subset(val, range(512)), Subset(test, range(1024))
     return train, val, test
 
 

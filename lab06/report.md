@@ -12,7 +12,7 @@ Reading: Reddi, Ch. 8 *AI Training* (training-system architecture, data loading,
 
 Everything runs with `python lab06/src/run_all.py`; every step can also be run alone.
 
-**Measurement environment.** All numbers below come from one run of `run_all.py` with the pinned environment (Python 3.11.8, torch 2.3.1 CPU build, mlflow 2.14.1) on a GitHub-hosted Linux runner: AMD EPYC 7763, 2 physical cores / 4 logical CPUs, 16 GB RAM, 2 PyTorch threads (`results/versions.txt`, workflow `.github/workflows/run-labs.yml`). The full run took about 54 minutes. Absolute times are specific to this machine; all comparisons were made on it.
+**Measurement environment.** All numbers below come from one run of `run_all.py` with the pinned environment (Python 3.11.8, torch 2.3.1 CPU build, mlflow 2.14.1) on a GitHub-hosted Linux runner: AMD EPYC 7763, 2 physical cores / 4 logical CPUs, 16 GB RAM, 2 PyTorch threads (`results/versions.txt`). The full run took about 54 minutes. Absolute times are specific to this machine; all comparisons were made on it.
 
 | Step | Script | Output |
 |---|---|---|

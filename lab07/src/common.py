@@ -1,7 +1,6 @@
 """Shared helpers for Lab 7: data, training, evaluation and cost measurement."""
 import gzip
 import io
-import os
 import random
 import statistics
 import time
@@ -52,8 +51,6 @@ def load_tensors():
     perm = torch.randperm(len(x), generator=torch.Generator().manual_seed(SEED))
     tr_idx, va_idx = perm[:55_000], perm[55_000:]
     xt, yt = prep(te)
-    if os.environ.get("LAB_SMOKE") == "1":   # quick pipeline test on a small subset (CI only)
-        tr_idx, va_idx, xt, yt = tr_idx[:2048], va_idx[:512], xt[:1024], yt[:1024]
     return (x[tr_idx], y[tr_idx]), (x[va_idx], y[va_idx]), (xt, yt)
 
 
