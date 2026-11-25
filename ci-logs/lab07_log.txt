@@ -1,0 +1,346 @@
+
+=== print_versions.py ===
+Python: 3.11.8
+Implementation: CPython
+Platform: Linux-6.8.0-1070-azure-x86_64-with-glibc2.35
+Processor: x86_64
+
+package              installed                    pinned                      
+numpy                1.26.4                       1.26.4                      
+pandas               2.2.2                        2.2.2                       
+scikit-learn         1.5.0                        1.5.0                       
+scipy                1.13.1                       1.13.1                      
+matplotlib           3.9.0                        3.9.0                       
+seaborn              0.13.2                       0.13.2                      
+torch                2.3.1+cpu                    2.3.1                         <-- mismatch
+torchvision          0.18.1+cpu                   0.18.1                        <-- mismatch
+torchinfo            1.8.0                        1.8.0                       
+thop                 0.1.1-2209072238             0.1.1.post2209072238        
+onnx                 1.16.1                       1.16.1                      
+onnxruntime          1.18.0                       1.18.0                      
+mlflow               2.14.1                       2.14.1                      
+memory-profiler      0.61.0                       0.61.0                      
+psutil               5.9.8                        5.9.8                       
+codecarbon           2.4.2                        2.4.2                       
+fastapi              0.111.0                      0.111.0                     
+uvicorn              0.30.1                       0.30.1                      
+pytest               8.2.2                        8.2.2                       
+httpx                0.27.0                       0.27.0                      
+locust               2.28.0                       2.28.0                      
+requests             2.32.3                       2.32.3                      
+pyarrow              16.1.0                       16.1.0                      
+joblib               1.4.2                        1.4.2                       
+tqdm                 4.66.4                       4.66.4                      
+
+=== baseline.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-images-idx3-ubyte.gz
+  0%|          | 0/26421880 [00:00<?, ?it/s]  0%|          | 32768/26421880 [00:00<01:53, 232216.09it/s]  0%|          | 65536/26421880 [00:00<01:55, 227717.24it/s]  0%|          | 98304/26421880 [00:00<01:56, 226382.17it/s]  1%|          | 229376/26421880 [00:00<00:53, 493070.08it/s]  2%|▏         | 425984/26421880 [00:00<00:32, 802311.16it/s]  3%|▎         | 884736/26421880 [00:00<00:15, 1600685.37it/s]  7%|▋         | 1736704/26421880 [00:01<00:08, 2989130.49it/s] 13%|█▎        | 3506176/26421880 [00:01<00:03, 5902502.27it/s] 27%|██▋       | 7012352/26421880 [00:01<00:01, 11577097.24it/s] 42%|████▏     | 11141120/26421880 [00:01<00:00, 16593717.27it/s] 58%|█████▊    | 15302656/26421880 [00:01<00:00, 20138929.37it/s] 73%|███████▎  | 19398656/26421880 [00:01<00:00, 22441489.94it/s] 89%|████████▉ | 23527424/26421880 [00:01<00:00, 24100062.65it/s]100%|██████████| 26421880/26421880 [00:01<00:00, 13858328.82it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-labels-idx1-ubyte.gz
+  0%|          | 0/29515 [00:00<?, ?it/s]100%|██████████| 29515/29515 [00:00<00:00, 201312.46it/s]100%|██████████| 29515/29515 [00:00<00:00, 200999.00it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/train-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-images-idx3-ubyte.gz
+  0%|          | 0/4422102 [00:00<?, ?it/s]  1%|          | 32768/4422102 [00:00<00:19, 223416.22it/s]  1%|▏         | 65536/4422102 [00:00<00:19, 223015.94it/s]  3%|▎         | 131072/4422102 [00:00<00:13, 324608.02it/s]  5%|▌         | 229376/4422102 [00:00<00:09, 460478.84it/s] 10%|█         | 458752/4422102 [00:00<00:04, 856350.19it/s] 21%|██        | 917504/4422102 [00:00<00:02, 1625629.65it/s] 41%|████▏     | 1835008/4422102 [00:01<00:00, 3132770.10it/s] 83%|████████▎ | 3670016/4422102 [00:01<00:00, 6101679.86it/s]100%|██████████| 4422102/4422102 [00:01<00:00, 3749327.89it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-images-idx3-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz
+Downloading http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-labels-idx1-ubyte.gz
+  0%|          | 0/5148 [00:00<?, ?it/s]100%|██████████| 5148/5148 [00:00<00:00, 22191446.03it/s]
+Extracting /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw/t10k-labels-idx1-ubyte.gz to /home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/data/FashionMNIST/raw
+
+[codecarbon INFO @ 23:33:51] offline tracker init
+  baseline epoch 1: loss 0.4994  val_acc 0.8804  36.1s
+  baseline epoch 2: loss 0.3061  val_acc 0.8946  30.7s
+  baseline epoch 3: loss 0.2574  val_acc 0.9044  30.2s
+  baseline epoch 4: loss 0.2288  val_acc 0.9152  30.5s
+  baseline epoch 5: loss 0.2045  val_acc 0.9188  29.9s
+  baseline epoch 6: loss 0.1847  val_acc 0.9228  30.0s
+  baseline epoch 7: loss 0.1648  val_acc 0.9212  29.9s
+  baseline epoch 8: loss 0.1472  val_acc 0.9254  29.7s
+  baseline epoch 9: loss 0.1333  val_acc 0.9252  29.7s
+  baseline epoch 10: loss 0.1179  val_acc 0.9268  29.7s
+model                          baseline BigCNN
+params                         997434
+size_bytes                     3992888
+size_on_disk_bytes             3993478
+flops_per_image                16711488
+val_acc                        0.9268
+test_acc                       0.9231
+train_time_s                   306.4355080309999
+train_energy_kwh               0.013255267899207978
+inference_energy_kwh_per_1k    8.721042725495212e-06
+latency_b1_ms                  0.4741719999401539
+latency_b256_ms                54.77808749992619
+threads                        2
+
+=== prune_unstructured.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+[codecarbon INFO @ 23:39:45] offline tracker init
+  global s=0 epoch 1: loss 0.0797  val_acc 0.9306  31.3s
+  global s=0 epoch 2: loss 0.0641  val_acc 0.9314  33.4s
+  global s=0 epoch 3: loss 0.0556  val_acc 0.9314  33.8s
+global s=0     achieved=0.0000  acc pruned=0.9231  fine-tuned=0.9307
+  global s=0.25 epoch 1: loss 0.0793  val_acc 0.9310  30.7s
+  global s=0.25 epoch 2: loss 0.0638  val_acc 0.9318  31.5s
+  global s=0.25 epoch 3: loss 0.0556  val_acc 0.9334  31.5s
+global s=0.25  achieved=0.2500  acc pruned=0.9232  fine-tuned=0.9323
+  global s=0.5 epoch 1: loss 0.0791  val_acc 0.9314  30.7s
+  global s=0.5 epoch 2: loss 0.0639  val_acc 0.9328  30.6s
+  global s=0.5 epoch 3: loss 0.0559  val_acc 0.9326  30.8s
+global s=0.5   achieved=0.5000  acc pruned=0.9217  fine-tuned=0.9324
+  global s=0.75 epoch 1: loss 0.0879  val_acc 0.9306  31.0s
+  global s=0.75 epoch 2: loss 0.0720  val_acc 0.9310  31.1s
+  global s=0.75 epoch 3: loss 0.0635  val_acc 0.9320  31.2s
+global s=0.75  achieved=0.7500  acc pruned=0.9218  fine-tuned=0.9314
+  global s=0.9 epoch 1: loss 0.1650  val_acc 0.9284  30.6s
+  global s=0.9 epoch 2: loss 0.1195  val_acc 0.9288  30.6s
+  global s=0.9 epoch 3: loss 0.1078  val_acc 0.9290  30.2s
+global s=0.9   achieved=0.9000  acc pruned=0.8732  fine-tuned=0.9284
+  global s=0.95 epoch 1: loss 0.3747  val_acc 0.9176  34.0s
+  global s=0.95 epoch 2: loss 0.2104  val_acc 0.9192  34.6s
+  global s=0.95 epoch 3: loss 0.1865  val_acc 0.9218  34.0s
+global s=0.95  achieved=0.9500  acc pruned=0.6994  fine-tuned=0.9189
+  layer s=0 epoch 1: loss 0.0797  val_acc 0.9306  30.0s
+  layer s=0 epoch 2: loss 0.0641  val_acc 0.9314  29.7s
+  layer s=0 epoch 3: loss 0.0556  val_acc 0.9314  29.8s
+layer  s=0     achieved=0.0000  acc pruned=0.9231  fine-tuned=0.9307
+  layer s=0.25 epoch 1: loss 0.0825  val_acc 0.9308  30.0s
+  layer s=0.25 epoch 2: loss 0.0653  val_acc 0.9310  29.6s
+  layer s=0.25 epoch 3: loss 0.0568  val_acc 0.9324  29.3s
+layer  s=0.25  achieved=0.2500  acc pruned=0.9203  fine-tuned=0.9339
+  layer s=0.5 epoch 1: loss 0.1181  val_acc 0.9266  29.3s
+  layer s=0.5 epoch 2: loss 0.0854  val_acc 0.9296  29.8s
+  layer s=0.5 epoch 3: loss 0.0724  val_acc 0.9288  29.7s
+layer  s=0.5   achieved=0.5000  acc pruned=0.8337  fine-tuned=0.9297
+  layer s=0.75 epoch 1: loss 0.3319  val_acc 0.9084  30.1s
+  layer s=0.75 epoch 2: loss 0.1918  val_acc 0.9168  29.6s
+  layer s=0.75 epoch 3: loss 0.1599  val_acc 0.9194  29.8s
+layer  s=0.75  achieved=0.7500  acc pruned=0.4489  fine-tuned=0.9225
+  layer s=0.9 epoch 1: loss 0.9893  val_acc 0.8116  29.0s
+  layer s=0.9 epoch 2: loss 0.5214  val_acc 0.8546  29.0s
+  layer s=0.9 epoch 3: loss 0.4414  val_acc 0.8690  29.0s
+layer  s=0.9   achieved=0.9000  acc pruned=0.0998  fine-tuned=0.8674
+  layer s=0.95 epoch 1: loss 1.5212  val_acc 0.7310  28.7s
+  layer s=0.95 epoch 2: loss 0.8894  val_acc 0.7780  28.7s
+  layer s=0.95 epoch 3: loss 0.7579  val_acc 0.8060  28.7s
+layer  s=0.95  achieved=0.9500  acc pruned=0.1034  fine-tuned=0.8044
+method  target_sparsity  achieved_weight_sparsity  nonzero_params  test_acc_after_pruning  test_acc_after_finetune  val_acc_after_finetune  finetune_time_s  finetune_energy_kwh
+global             0.00                      0.00          997434                  0.9231                   0.9307                  0.9314          98.4495               0.0042
+global             0.25                      0.25          748170                  0.9232                   0.9323                  0.9334          93.6003               0.0040
+global             0.50                      0.50          498906                  0.9217                   0.9324                  0.9326          92.1912               0.0040
+global             0.75                      0.75          249642                  0.9218                   0.9314                  0.9320          93.2576               0.0040
+global             0.90                      0.90          100084                  0.8732                   0.9284                  0.9290          91.3346               0.0040
+global             0.95                      0.95           50231                  0.6994                   0.9189                  0.9218         102.5333               0.0044
+ layer             0.00                      0.00          997434                  0.9231                   0.9307                  0.9314          89.4825               0.0039
+ layer             0.25                      0.25          748170                  0.9203                   0.9339                  0.9324          88.9350               0.0039
+ layer             0.50                      0.50          498906                  0.8337                   0.9297                  0.9288          88.8214               0.0038
+ layer             0.75                      0.75          249642                  0.4489                   0.9225                  0.9194          89.4882               0.0039
+ layer             0.90                      0.90          100084                  0.0998                   0.8674                  0.8690          87.0034               0.0038
+ layer             0.95                      0.95           50230                  0.1034                   0.8044                  0.8060          86.0954               0.0037
+
+=== prune_structured.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+structured 0%: channels [32, 64, 128], params 997,434, acc pruned 0.9231, fine-tuned 0.9231
+[codecarbon INFO @ 00:01:23] offline tracker init
+  structured 10% epoch 1: loss 0.0862  val_acc 0.9334  28.0s
+  structured 10% epoch 2: loss 0.0690  val_acc 0.9342  28.2s
+  structured 10% epoch 3: loss 0.0593  val_acc 0.9304  28.2s
+structured 10%: channels [29, 58, 116], params 896,244, acc pruned 0.9166, fine-tuned 0.9303
+  structured 25% epoch 1: loss 0.1012  val_acc 0.9342  20.1s
+  structured 25% epoch 2: loss 0.0805  val_acc 0.9322  20.5s
+  structured 25% epoch 3: loss 0.0714  val_acc 0.9336  20.6s
+structured 25%: channels [24, 48, 96], params 731,194, acc pruned 0.9048, fine-tuned 0.9298
+  structured 50% epoch 1: loss 0.1679  val_acc 0.9254  13.1s
+  structured 50% epoch 2: loss 0.1250  val_acc 0.9292  13.1s
+  structured 50% epoch 3: loss 0.1109  val_acc 0.9300  13.3s
+structured 50%: channels [16, 32, 64], params 476,474, acc pruned 0.8159, fine-tuned 0.9270
+ filter_fraction_removed  channels  params  param_sparsity_vs_baseline  size_bytes  flops_per_image  test_acc_after_pruning  test_acc_after_finetune  finetune_time_s  finetune_energy_kwh  latency_b1_ms  latency_b256_ms
+                    0.00 32-64-128  997434                      0.0000     3992888         16711488                  0.9231                   0.9231           0.0000               0.0000         0.4700          80.4577
+                    0.10 29-58-116  896244                      0.1015     3588344         13917312                  0.9166                   0.9303          84.3708               0.0036         0.4298          51.3461
+                    0.25  24-48-96  731194                      0.2669     2927992          9824832                  0.9048                   0.9298          61.1988               0.0026         0.3797          60.4729
+                    0.50  16-32-64  476474                      0.5223     1909048          4744512                  0.8159                   0.9270          39.5480               0.0017         0.2867          23.4205
+
+=== plot_pruning.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+
+=== latency_size.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/lab07/src/latency_size.py:38: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at ../aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+  csr = t.reshape(t.shape[0], -1).to_sparse_csr()
+                 model  dense_MB  dense_gzip_MB  csr_int64_MB  csr_int32_MB  values_plus_bitmask_MB
+             global 0%     3.808          3.540        11.420         7.615                   3.928
+            global 25%     3.808          2.879         8.568         5.713                   2.977
+            global 50%     3.808          2.051         5.715         3.812                   2.026
+            global 75%     3.808          1.210         2.862         1.910                   1.075
+            global 90%     3.808          0.645         1.151         0.769                   0.505
+            global 95%     3.808          0.433         0.580         0.388                   0.314
+structured 10% filters     3.422          3.178        10.262         6.843                   3.530
+structured 25% filters     2.792          2.595         8.373         5.584                   2.881
+structured 50% filters     1.821          1.693         5.458         3.640                   1.878
+
+                 model                     format  latency_b1_ms  latency_b256_ms  test_acc  flops_executed  flops_nonzero  max_abs_diff_vs_dense_format  speedup_b1  speedup_b256
+      baseline (dense)                      dense         0.4634          80.1816    0.9231      16711488.0            NaN                           NaN      1.0000        1.0000
+     global 90% sparse dense storage (zeros kept)         0.4671          83.2800    0.9284      16711488.0      4334647.0                           NaN      0.9921        0.9628
+     global 90% sparse           fc layers as CSR         0.5345          84.1575    0.9284             NaN      4334647.0                           0.0      0.8671        0.9528
+     global 95% sparse dense storage (zeros kept)         0.4647          82.8182    0.9189      16711488.0      2734797.0                           NaN      0.9974        0.9682
+     global 95% sparse           fc layers as CSR         0.5073          83.0784    0.9189             NaN      2734797.0                           0.0      0.9136        0.9651
+structured 10% filters              smaller dense         0.4330          52.7580    0.9303      13917312.0            NaN                           NaN      1.0702        1.5198
+structured 25% filters              smaller dense         0.3790          61.2279    0.9298       9824832.0            NaN                           NaN      1.2227        1.3096
+structured 50% filters              smaller dense         0.2840          23.6288    0.9270       4744512.0            NaN                           NaN      1.6321        3.3934
+fc1 micro: sparsity 0     batch 1    dense 0.0663 ms  CSR 0.6224 ms  speed-up 0.11x
+fc1 micro: sparsity 0     batch 256  dense 2.6934 ms  CSR 21.1649 ms  speed-up 0.13x
+fc1 micro: sparsity 0.5   batch 1    dense 0.0632 ms  CSR 0.3410 ms  speed-up 0.19x
+fc1 micro: sparsity 0.5   batch 256  dense 2.7174 ms  CSR 13.3939 ms  speed-up 0.20x
+fc1 micro: sparsity 0.75  batch 1    dense 0.0655 ms  CSR 0.1932 ms  speed-up 0.34x
+fc1 micro: sparsity 0.75  batch 256  dense 2.6862 ms  CSR 5.8843 ms  speed-up 0.46x
+fc1 micro: sparsity 0.9   batch 1    dense 0.0650 ms  CSR 0.1074 ms  speed-up 0.60x
+fc1 micro: sparsity 0.9   batch 256  dense 2.6968 ms  CSR 1.9947 ms  speed-up 1.35x
+fc1 micro: sparsity 0.95  batch 1    dense 0.0644 ms  CSR 0.0792 ms  speed-up 0.81x
+fc1 micro: sparsity 0.95  batch 256  dense 2.6866 ms  CSR 0.8217 ms  speed-up 3.27x
+fc1 micro: sparsity 0.99  batch 1    dense 0.0634 ms  CSR 0.0519 ms  speed-up 1.22x
+fc1 micro: sparsity 0.99  batch 256  dense 2.7007 ms  CSR 0.1806 ms  speed-up 14.95x
+
+=== distill.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+teacher test accuracy 0.9231
+[codecarbon INFO @ 00:06:54] offline tracker init
+  plain seed 42 epoch 1: loss 0.5876  val_acc 0.8544  11.7s
+  plain seed 42 epoch 2: loss 0.3650  val_acc 0.8646  11.4s
+  plain seed 42 epoch 3: loss 0.3095  val_acc 0.8878  11.5s
+  plain seed 42 epoch 4: loss 0.2790  val_acc 0.8916  11.5s
+  plain seed 42 epoch 5: loss 0.2575  val_acc 0.9010  11.8s
+  plain seed 42 epoch 6: loss 0.2375  val_acc 0.9084  11.4s
+  plain seed 42 epoch 7: loss 0.2219  val_acc 0.9020  11.4s
+  plain seed 42 epoch 8: loss 0.2089  val_acc 0.9114  11.5s
+  plain seed 42 epoch 9: loss 0.1957  val_acc 0.9128  11.4s
+  plain seed 42 epoch 10: loss 0.1849  val_acc 0.9058  11.5s
+plain      seed 42: test acc 0.9056
+  kd_manual seed 42 epoch 1: loss 4.9818  val_acc 0.8054  11.5s
+  kd_manual seed 42 epoch 2: loss 1.7169  val_acc 0.8464  11.7s
+  kd_manual seed 42 epoch 3: loss 1.2435  val_acc 0.8616  11.7s
+  kd_manual seed 42 epoch 4: loss 0.9848  val_acc 0.8764  11.6s
+  kd_manual seed 42 epoch 5: loss 0.8148  val_acc 0.8858  11.6s
+  kd_manual seed 42 epoch 6: loss 0.7027  val_acc 0.8890  11.5s
+  kd_manual seed 42 epoch 7: loss 0.6165  val_acc 0.8902  11.6s
+  kd_manual seed 42 epoch 8: loss 0.5539  val_acc 0.8912  11.6s
+  kd_manual seed 42 epoch 9: loss 0.5048  val_acc 0.9002  11.5s
+  kd_manual seed 42 epoch 10: loss 0.4672  val_acc 0.9006  11.5s
+kd_manual  seed 42: test acc 0.8981
+  kd_hinton seed 42 epoch 1: loss 2.9238  val_acc 0.8356  11.5s
+  kd_hinton seed 42 epoch 2: loss 1.2479  val_acc 0.8612  11.7s
+  kd_hinton seed 42 epoch 3: loss 0.9262  val_acc 0.8704  11.7s
+  kd_hinton seed 42 epoch 4: loss 0.7425  val_acc 0.8854  11.5s
+  kd_hinton seed 42 epoch 5: loss 0.6278  val_acc 0.8892  11.6s
+  kd_hinton seed 42 epoch 6: loss 0.5467  val_acc 0.8982  11.6s
+  kd_hinton seed 42 epoch 7: loss 0.4818  val_acc 0.8978  11.5s
+  kd_hinton seed 42 epoch 8: loss 0.4317  val_acc 0.8930  11.5s
+  kd_hinton seed 42 epoch 9: loss 0.3963  val_acc 0.9076  11.6s
+  kd_hinton seed 42 epoch 10: loss 0.3655  val_acc 0.9106  11.7s
+kd_hinton  seed 42: test acc 0.9071
+  plain seed 43 epoch 1: loss 0.5676  val_acc 0.8560  11.6s
+  plain seed 43 epoch 2: loss 0.3491  val_acc 0.8774  11.7s
+  plain seed 43 epoch 3: loss 0.3022  val_acc 0.8904  11.6s
+  plain seed 43 epoch 4: loss 0.2718  val_acc 0.8994  11.7s
+  plain seed 43 epoch 5: loss 0.2482  val_acc 0.8978  11.8s
+  plain seed 43 epoch 6: loss 0.2309  val_acc 0.9058  11.8s
+  plain seed 43 epoch 7: loss 0.2127  val_acc 0.9078  11.8s
+  plain seed 43 epoch 8: loss 0.2004  val_acc 0.9102  11.8s
+  plain seed 43 epoch 9: loss 0.1857  val_acc 0.9142  11.8s
+  plain seed 43 epoch 10: loss 0.1718  val_acc 0.9136  11.8s
+plain      seed 43: test acc 0.9099
+  kd_manual seed 43 epoch 1: loss 4.3252  val_acc 0.8308  11.9s
+  kd_manual seed 43 epoch 2: loss 1.5073  val_acc 0.8556  12.0s
+  kd_manual seed 43 epoch 3: loss 1.1206  val_acc 0.8698  12.0s
+  kd_manual seed 43 epoch 4: loss 0.9052  val_acc 0.8838  12.0s
+  kd_manual seed 43 epoch 5: loss 0.7649  val_acc 0.8882  11.9s
+  kd_manual seed 43 epoch 6: loss 0.6639  val_acc 0.8898  12.0s
+  kd_manual seed 43 epoch 7: loss 0.5795  val_acc 0.8990  11.9s
+  kd_manual seed 43 epoch 8: loss 0.5188  val_acc 0.8970  11.9s
+  kd_manual seed 43 epoch 9: loss 0.4704  val_acc 0.9042  11.9s
+  kd_manual seed 43 epoch 10: loss 0.4262  val_acc 0.9002  11.9s
+kd_manual  seed 43: test acc 0.8972
+  kd_hinton seed 43 epoch 1: loss 2.8026  val_acc 0.8440  11.9s
+  kd_hinton seed 43 epoch 2: loss 1.2082  val_acc 0.8640  12.1s
+  kd_hinton seed 43 epoch 3: loss 0.8883  val_acc 0.8808  12.2s
+  kd_hinton seed 43 epoch 4: loss 0.7180  val_acc 0.8898  12.2s
+  kd_hinton seed 43 epoch 5: loss 0.6024  val_acc 0.8994  12.2s
+  kd_hinton seed 43 epoch 6: loss 0.5305  val_acc 0.9000  12.1s
+  kd_hinton seed 43 epoch 7: loss 0.4722  val_acc 0.9038  12.0s
+  kd_hinton seed 43 epoch 8: loss 0.4264  val_acc 0.9066  11.9s
+  kd_hinton seed 43 epoch 9: loss 0.3902  val_acc 0.9068  12.0s
+  kd_hinton seed 43 epoch 10: loss 0.3599  val_acc 0.9066  11.9s
+kd_hinton  seed 43: test acc 0.9062
+  plain seed 44 epoch 1: loss 0.5747  val_acc 0.8490  11.5s
+  plain seed 44 epoch 2: loss 0.3507  val_acc 0.8808  11.6s
+  plain seed 44 epoch 3: loss 0.2914  val_acc 0.8940  11.6s
+  plain seed 44 epoch 4: loss 0.2632  val_acc 0.8892  11.6s
+  plain seed 44 epoch 5: loss 0.2415  val_acc 0.9026  11.6s
+  plain seed 44 epoch 6: loss 0.2227  val_acc 0.9024  11.4s
+  plain seed 44 epoch 7: loss 0.2054  val_acc 0.9116  11.4s
+  plain seed 44 epoch 8: loss 0.1930  val_acc 0.9136  11.5s
+  plain seed 44 epoch 9: loss 0.1813  val_acc 0.9154  11.5s
+  plain seed 44 epoch 10: loss 0.1704  val_acc 0.9064  11.5s
+plain      seed 44: test acc 0.9060
+  kd_manual seed 44 epoch 1: loss 4.6484  val_acc 0.8220  11.8s
+  kd_manual seed 44 epoch 2: loss 1.7291  val_acc 0.8574  11.8s
+  kd_manual seed 44 epoch 3: loss 1.2440  val_acc 0.8726  11.9s
+  kd_manual seed 44 epoch 4: loss 0.9685  val_acc 0.8732  11.8s
+  kd_manual seed 44 epoch 5: loss 0.7877  val_acc 0.8916  11.8s
+  kd_manual seed 44 epoch 6: loss 0.6707  val_acc 0.8878  11.9s
+  kd_manual seed 44 epoch 7: loss 0.5753  val_acc 0.9002  11.8s
+  kd_manual seed 44 epoch 8: loss 0.5195  val_acc 0.9028  11.9s
+  kd_manual seed 44 epoch 9: loss 0.4747  val_acc 0.8998  11.9s
+  kd_manual seed 44 epoch 10: loss 0.4253  val_acc 0.9116  11.9s
+kd_manual  seed 44: test acc 0.9055
+  kd_hinton seed 44 epoch 1: loss 2.7360  val_acc 0.8488  11.7s
+  kd_hinton seed 44 epoch 2: loss 1.1413  val_acc 0.8732  11.7s
+  kd_hinton seed 44 epoch 3: loss 0.7917  val_acc 0.8864  11.7s
+  kd_hinton seed 44 epoch 4: loss 0.6322  val_acc 0.8906  11.7s
+  kd_hinton seed 44 epoch 5: loss 0.5363  val_acc 0.8992  11.7s
+  kd_hinton seed 44 epoch 6: loss 0.4632  val_acc 0.9020  11.6s
+  kd_hinton seed 44 epoch 7: loss 0.4109  val_acc 0.9096  11.6s
+  kd_hinton seed 44 epoch 8: loss 0.3766  val_acc 0.9086  11.7s
+  kd_hinton seed 44 epoch 9: loss 0.3489  val_acc 0.9090  11.8s
+  kd_hinton seed 44 epoch 10: loss 0.3226  val_acc 0.9106  11.7s
+kd_hinton  seed 44: test acc 0.9097
+
+                    model  test_acc_mean  test_acc_std  agreement_with_teacher  train_time_s  params  size_bytes  flops_per_image  latency_b1_ms  latency_b256_ms  inference_energy_kwh_per_1k  train_energy_kwh
+teacher (baseline BigCNN)         0.9231        0.0000                  1.0000           NaN  997434     3992888         16711488         0.4691          82.1156                          0.0               NaN
+            student plain         0.9072        0.0024                  0.9329      115.8946  103750      418488          3556944         0.2464          21.8808                          0.0            0.0050
+        student kd_manual         0.9003        0.0046                  0.9372      117.8990  103750      418488          3556944         0.2464          21.8808                          0.0            0.0051
+        student kd_hinton         0.9077        0.0018                  0.9420      117.8572  103750      418488          3556944         0.2464          21.8808                          0.0            0.0051
+
+=== summary.py ===
+/opt/hostedtoolcache/Python/3.11.8/x64/lib/python3.11/site-packages/torch/cuda/__init__.py:56: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/runner/work/Machine-Learning-LABs-Fatih-Alkan-79731/Machine-Learning-LABs-Fatih-Alkan-79731/lab07/src/latency_size.py:38: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at ../aten/src/ATen/SparseCsrTensorImpl.cpp:53.)
+  csr = t.reshape(t.shape[0], -1).to_sparse_csr()
+[codecarbon INFO @ 00:26:36] offline tracker init
+| Pillar | Metric | Dense baseline | Unstructured global 90 % | Structured 50 % filters | Student, no teacher | Student, distilled (T=4, α=0.5) |
+|---|---|---|---|---|---|---|
+| Data | data_training_recipe | 10 epochs, hard labels | baseline + 3 fine-tune epochs | baseline + 3 fine-tune epochs | 10 epochs, hard labels | 10 epochs, hard + teacher soft labels |
+| Data | data_samples_processed | 550,000 | 715,000 | 715,000 | 550,000 | 605,000 |
+| Data | data_depends_on | - | needs the trained baseline | needs the trained baseline | - | needs the trained teacher + 1 teacher pass |
+| Model | model_params | 997,434 | 997,434 | 476,474 | 103,750 | 103,750 |
+| Model | model_nonzero_params | 997,434 | 100,084 | 476,474 | 103,750 | 103,750 |
+| Model | model_size_dense_MB | 3.808 | 3.808 | 1.821 | 0.3991 | 0.3991 |
+| Model | model_size_best_sparse_MB | 3.928 | 0.5047 | 1.878 | 0.4121 | 0.4121 |
+| Model | test_acc | 0.9231 | 0.9284 | 0.927 | 0.9056 | 0.8981 |
+| Compute | compute_flops_executed | 16,711,488 | 16,711,488 | 4,744,512 | 3,556,944 | 3,556,944 |
+| Compute | compute_flops_nonzero | 16,711,488 | 4,334,647 | 4,744,512 | 3,556,944 | 3,556,944 |
+| Compute | compute_latency_b1_ms | 0.4654 | 0.4695 | 0.2817 | 0.2385 | 0.2418 |
+| Compute | compute_latency_b256_ms | 80.33 | 83.25 | 23.16 | 21.83 | 22.42 |
+| Energy | energy_training_kwh_total | 0.01326 | 0.01721 | 0.01496 | 0.00497 | 0.01827 |
+| Energy | energy_inference_kwh_per_1k_images | 1.28e-05 | 1.31e-05 | 3.7e-06 | 3.49e-06 | 3.56e-06 |
