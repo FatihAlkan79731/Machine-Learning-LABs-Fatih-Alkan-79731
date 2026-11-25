@@ -1,0 +1,21 @@
+{
+  "run_name": "sched_adam_step",
+  "mlflow_run_id": "597f24f2114c4cfcb249eac7375c5e7f",
+  "epochs_done": 10,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "adam",
+  "scheduler": "step",
+  "num_workers": 0,
+  "final_val_acc": 0.9062,
+  "final_val_loss": 0.26341274280548094,
+  "best_val_acc": 0.9088,
+  "train_time_s": 170.80902345999993,
+  "mean_throughput_samples_s": 3221.6349778338845,
+  "memory_before_training_mb": 441.6484375,
+  "peak_memory_mb": 532.3046875,
+  "test_loss": 0.2714507207155228,
+  "test_acc": 0.9009
+}

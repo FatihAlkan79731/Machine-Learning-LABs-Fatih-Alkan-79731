@@ -1,0 +1,21 @@
+{
+  "run_name": "baseline",
+  "mlflow_run_id": "e4ee09c513214f07991435af479b9740",
+  "epochs_done": 5,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "adam",
+  "scheduler": "none",
+  "num_workers": 0,
+  "final_val_acc": 0.8968,
+  "final_val_loss": 0.2867344634771347,
+  "best_val_acc": 0.8968,
+  "train_time_s": 87.06282892600018,
+  "mean_throughput_samples_s": 3162.9964033125025,
+  "memory_before_training_mb": 449.08203125,
+  "peak_memory_mb": 526.44921875,
+  "test_loss": 0.29765089616775514,
+  "test_acc": 0.8923
+}

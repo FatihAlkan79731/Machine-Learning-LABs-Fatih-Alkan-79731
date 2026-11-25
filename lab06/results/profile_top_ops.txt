@@ -1,0 +1,38 @@
+torch.profiler, one epoch, CNN, batch 128, num_workers 0, 430 steps, torch 2.3.1+cpu, threads 2
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+enumerate(DataLoader)#_SingleProcessDataLoaderIter._...        33.63%        7.231s        46.59%       10.018s      23.244ms           431  
+                             aten::convolution_backward        18.34%        3.943s        18.38%        3.953s       4.597ms           860  
+                          aten::max_pool2d_with_indices        12.41%        2.668s        12.41%        2.668s       3.103ms           860  
+                               aten::mkldnn_convolution         8.63%        1.856s        10.19%        2.190s       2.547ms           860  
+                               aten::threshold_backward         4.87%        1.047s         4.87%        1.047s       1.217ms           860  
+                                         aten::_to_copy         2.07%     445.372ms         3.37%     724.913ms       4.135us        175320  
+                                            aten::empty         1.62%     347.341ms         1.62%     347.341ms       3.027us        114739  
+                                        aten::clamp_min         1.25%     268.247ms         1.25%     268.247ms     311.915us           860  
+                                              aten::div         1.23%     264.994ms         2.24%     482.090ms       8.373us         57580  
+                                           aten::select         1.08%     232.533ms         1.09%     234.442ms       2.131us        110000  
+                                               aten::eq         1.05%     226.836ms         2.19%     471.190ms       8.567us         55000  
+                                            aten::copy_         0.99%     213.714ms         0.99%     213.714ms       0.748us        285750  
+                                               backward         0.94%     201.766ms        26.93%        5.791s      13.468ms           430  
+                                               aten::to         0.85%     183.272ms         3.87%     832.859ms       2.102us        396186  
+                 aten::max_pool2d_with_indices_backward         0.85%     183.057ms         1.62%     348.749ms     405.522us           860  
+                                              aten::any         0.83%     179.131ms         1.12%     240.552ms       4.374us         55000  
+                                    aten::empty_strided         0.82%     176.950ms         0.82%     176.950ms       0.767us        230762  
+                                            aten::fill_         0.74%     159.685ms         0.74%     159.685ms      92.840us          1720  
+                               Optimizer.step#Adam.step         0.68%     146.438ms         1.26%     271.877ms     632.272us           430  
+                                             aten::view         0.61%     132.014ms         0.61%     132.014ms       0.595us        221720  
+                                             aten::sub_         0.60%     128.053ms         0.60%     128.053ms       2.328us         55000  
+                                          aten::permute         0.59%     126.805ms         0.59%     127.652ms       2.321us         55000  
+                                            aten::clone         0.50%     108.355ms         0.84%     180.759ms       3.287us         55000  
+                                               aten::mm         0.45%      97.348ms         0.45%      97.377ms     113.229us           860  
+                                             aten::item         0.34%      74.046ms         0.36%      76.852ms       0.683us        112581  
+                                             aten::div_         0.31%      66.587ms         0.31%      66.587ms       1.211us         55000  
+                                           aten::detach         0.30%      64.040ms         0.58%     124.529ms       2.163us         57580  
+                                                 detach         0.29%      61.880ms         0.29%      61.880ms       1.075us         57580  
+                                       aten::is_nonzero         0.27%      58.187ms         0.54%     115.857ms       2.106us         55000  
+                                          aten::view_as         0.27%      57.831ms         0.27%      58.511ms       1.064us         55000  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 21.503s
+
