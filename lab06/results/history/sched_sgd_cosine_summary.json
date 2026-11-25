@@ -1,0 +1,21 @@
+{
+  "run_name": "sched_sgd_cosine",
+  "mlflow_run_id": "efd5d6f0f0004d42bc972c617d6adcee",
+  "epochs_done": 10,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "sgd",
+  "scheduler": "cosine",
+  "num_workers": 0,
+  "final_val_acc": 0.9138,
+  "final_val_loss": 0.23877599272727967,
+  "best_val_acc": 0.9138,
+  "train_time_s": 172.50409559200125,
+  "mean_throughput_samples_s": 3191.793574177807,
+  "memory_before_training_mb": 441.484375,
+  "peak_memory_mb": 521.67578125,
+  "test_loss": 0.25146435055732724,
+  "test_acc": 0.9151
+}

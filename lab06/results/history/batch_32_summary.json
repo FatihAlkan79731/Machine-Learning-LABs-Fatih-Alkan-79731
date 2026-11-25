@@ -1,0 +1,21 @@
+{
+  "run_name": "batch_32",
+  "mlflow_run_id": "43d033345fe54d8191a89765115b2cb2",
+  "epochs_done": 5,
+  "interrupted": false,
+  "batch_size": 32,
+  "grad_accum_steps": 1,
+  "effective_batch": 32,
+  "optimizer": "adam",
+  "scheduler": "none",
+  "num_workers": 0,
+  "final_val_acc": 0.9014,
+  "final_val_loss": 0.2631643621444702,
+  "best_val_acc": 0.9018,
+  "train_time_s": 94.23634963199993,
+  "mean_throughput_samples_s": 2918.6732580555604,
+  "memory_before_training_mb": 441.53125,
+  "peak_memory_mb": 515.34375,
+  "test_loss": 0.27448068442344664,
+  "test_acc": 0.9013
+}

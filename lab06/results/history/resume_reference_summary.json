@@ -1,0 +1,21 @@
+{
+  "run_name": "resume_reference",
+  "mlflow_run_id": "fb7694617feb40c3928934616fadf97b",
+  "epochs_done": 6,
+  "interrupted": false,
+  "batch_size": 128,
+  "grad_accum_steps": 1,
+  "effective_batch": 128,
+  "optimizer": "adam",
+  "scheduler": "cosine",
+  "num_workers": 0,
+  "final_val_acc": 0.8982,
+  "final_val_loss": 0.28520308814048767,
+  "best_val_acc": 0.8998,
+  "train_time_s": 114.54302084799974,
+  "mean_throughput_samples_s": 2881.1898970687794,
+  "memory_before_training_mb": 441.4765625,
+  "peak_memory_mb": 525.68359375,
+  "test_loss": 0.2912557956695557,
+  "test_acc": 0.8943
+}
